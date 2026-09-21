@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/zy/(.*)",
+      "destination": "https://xyzzy.clrtd.com/zy/$1"
+    }
+  ]
+}
