@@ -422,6 +422,7 @@ body:has(#main_holder:not(:empty)) #canvas {
 /* AA. LE OPZIONI DI GIOCO (.game_options) */
 
 /* BB. Contenitore opzioni e avvisi host */
+/* BB. Contenitore opzioni e avvisi host */
 .game_options {
   background: #ffffff !important;
   border-radius: 12px !important;
@@ -431,10 +432,16 @@ body:has(#main_holder:not(:empty)) #canvas {
   flex: 1 1 auto !important;
   height: 100% !important;
   min-height: 0 !important;
-  display: flex !important;
+  display: flex; /* Rimosso !important per consentire a .hide di nasconderlo */
   flex-direction: column !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
+}
+
+.game_options.hide,
+.game_right_side.hide,
+.game_last_round.hide {
+  display: none !important;
 }
 
 .options_host_only {

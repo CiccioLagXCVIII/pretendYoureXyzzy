@@ -29,8 +29,8 @@ $(document).ready(function() {
       return;
     }
 
-    var $gameChatInput = $(".game .chat, [id^='tab-game-'] .chat, .tab-game .chat");
-    var $gameChatBtn = $(".game .chat_submit, [id^='tab-game-'] .chat_submit, .tab-game .chat_submit");
+    var $gameChatInput = $(".game .chat, [id*='tab-chat-game'] .chat, [id^='tab-game-'] .chat, .tab-game .chat");
+    var $gameChatBtn = $(".game .chat_submit, [id*='tab-chat-game'] .chat_submit, [id^='tab-game-'] .chat_submit, .tab-game .chat_submit");
 
     if (!$gameChatInput.length) {
       $gameChatInput = $("input.chat:visible");
@@ -122,7 +122,7 @@ $(document).ready(function() {
     $("body").addClass("in-game").removeClass("in-lobby");
 
     // 1. Trova e seleziona in automatico la tab della partita
-    var $gameTabLink = $('#tabs ul li a[href^="#tab-game-"]');
+    var $gameTabLink = $('#tabs ul li a[href*="tab-chat-game"], #tabs ul li a[href^="#tab-game-"]');
     if ($gameTabLink.length) {
       var $li = $gameTabLink.closest("li");
       if (!$li.hasClass("ui-tabs-active")) {

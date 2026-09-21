@@ -911,6 +911,7 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
   var playerName = playerInfo[cah.$.GamePlayerInfo.NAME];
   var playerStatus = playerInfo[cah.$.GamePlayerInfo.STATUS];
   var panel = this.scoreCards_[playerName];
+  var oldStatus = panel ? panel.getStatus() : null; // <-- FIX: previene ReferenceError
   if (!panel) {
     panel = new cah.GameScorePanel(playerName);
     if (this.firstSpectatorElement_) {
