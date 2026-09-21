@@ -665,3 +665,23 @@ dfn {
   word-wrap: break-word;
   overflow: hidden;
 }
+
+/* Fix per impedire alle opzioni di sovrapporsi e dare scrollbar */
+.game_options {
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+  background: #ffffff !important;
+  padding: 15px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+  z-index: 100 !important;
+}
+
+/* Limita l'altezza del riquadro con centinaia di checkbox standard */
+fieldset.card_sets {
+  max-height: 180px !important;
+  overflow-y: auto !important;
+  border: 1px solid #ddd !important;
+  padding: 8px !important;
+  background: #fafafa !important;
+}
