@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/AjaxServlet",
+      "destination": "https://xyzzy.clrtd.com/zy/AjaxServlet"
+    },
+    {
+      "source": "/LongPollServlet",
+      "destination": "https://xyzzy.clrtd.com/zy/LongPollServlet"
+    },
+    {
       "source": "/zy/(.*)",
       "destination": "https://xyzzy.clrtd.com/zy/$1"
     }

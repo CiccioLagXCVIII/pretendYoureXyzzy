@@ -81,6 +81,8 @@ $(document).ready(function() {
  */
 cah.Ajax.prototype.requestWithBuilder = function(builder) {
   var jqXHR = $.ajax({
+    url : "/AjaxServlet",
+    type : "POST",
     data : builder.data
   });
   this.pendingRequests_[builder.getSerial()] = builder;
