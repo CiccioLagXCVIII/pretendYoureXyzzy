@@ -81,7 +81,7 @@ $(document).ready(function() {
  */
 cah.Ajax.prototype.requestWithBuilder = function(builder) {
   var jqXHR = $.ajax({
-    url : "/AjaxServlet",
+    url : "/zy/AjaxServlet",
     type : "POST",
     data : builder.data
   });

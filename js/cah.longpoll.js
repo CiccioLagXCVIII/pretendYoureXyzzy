@@ -65,7 +65,7 @@ cah.longpoll.longPoll = function() {
     error : cah.longpoll.error,
     success : cah.longpoll.done,
     timeout : cah.longpoll.TIMEOUT,
-    url : "/LongPollServlet",
+    url : "/zy/LongPollServlet",
   });
 };
 
