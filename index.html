@@ -28,6 +28,7 @@
 <script type="text/javascript" src="js/cah.app.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
 <link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="cahMaterialDesign.css" />
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
 <jsp:include page="analytics.jsp" />
 </head>
@@ -435,27 +436,27 @@
       </select>
       <br/>
       
-      <!-- NOSTRA NUOVA SEZIONE: Mazzi Personalizzati Cardcast (In cima per comodità) -->
+      <!-- NOSTRA NUOVA SEZIONE: Mazzi Personalizzati Cardcast -->
       <fieldset class="cardcast_custom_sets" style="margin: 12px 0; padding: 12px; border: 2px solid #2196F3; border-radius: 8px; background: #f8fbff;">
         <legend style="font-weight: bold; color: #1976D2;">🃏 Mazzi Personalizzati (cast.clrtd.com)</legend>
         <p style="margin: 0 0 8px 0; font-size: 13px; color: #333;">
           Inserisci il codice del mazzo creato su <a href="https://cast.clrtd.com" target="_blank" style="color: #1976D2; font-weight: bold;">cast.clrtd.com</a>:
         </p>
         <div style="display: flex; gap: 8px; align-items: center;">
-          <input type="text" id="custom_cardcast_code" placeholder="Es. HVHST" maxlength="10" 
+          <input type="text" id="custom_cardcast_code" class="custom_cardcast_code" placeholder="Es. HVHST" maxlength="10" 
                  style="text-transform: uppercase; font-weight: bold; width: 130px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;" />
-          <input type="button" id="custom_cardcast_btn" value="Aggiungi Mazzo" 
+          <input type="button" id="custom_cardcast_btn" class="custom_cardcast_btn" value="Aggiungi Mazzo" 
                  style="padding: 6px 14px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;" />
         </div>
-        <div id="custom_cardcast_status" style="margin-top: 6px; font-size: 13px; font-weight: 500;"></div>
+        <div id="custom_cardcast_status" class="custom_cardcast_status" style="margin-top: 6px; font-size: 13px; font-weight: 500;"></div>
         
         <!-- Lista dei mazzi caricati -->
-        <div id="custom_cardcast_list_container" style="margin-top: 10px; display: none;">
-          <strong style="font-size: 13px; color: #333;">Mazzi attivi caricati:</strong>
-          <ul id="custom_cardcast_list" style="margin: 6px 0 0 0; padding-left: 20px; font-size: 13px; color: #444;"></ul>
+        <div id="custom_cardcast_list_container" class="custom_cardcast_list_container" style="margin-top: 10px; display: none;">
+          <strong style="font-size: 13px; color: #333;">Mazzi attivi in questa partita:</strong>
+          <ul id="custom_cardcast_list" class="custom_cardcast_list" style="margin: 6px 0 0 0; padding-left: 20px; font-size: 13px; color: #444;"></ul>
         </div>
       </fieldset>
-      
+
       <!-- Sezione Mazzi Standard -->
       <fieldset class="card_sets">
         <legend>Card Sets</legend>

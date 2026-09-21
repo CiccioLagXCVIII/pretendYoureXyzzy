@@ -1,26 +1,27 @@
 $(document).ready(function() {
-  // Array per memorizzare i mazzi aggiunti in memoria locale
   window.loadedCardcastDecks = window.loadedCardcastDecks || [];
 
   // Click su "Aggiungi Mazzo"
-  $(document).on("click", "#custom_cardcast_btn", function() {
+  $(document).on("click", "#custom_cardcast_btn, .custom_cardcast_btn", function() {
     submitCustomDeck();
   });
 
   // Invio con tasto Enter
-  $(document).on("keypress", "#custom_cardcast_code", function(e) {
+  $(document).on("keypress", "#custom_cardcast_code, .custom_cardcast_code", function(e) {
     if (e.which === 13) {
       submitCustomDeck();
     }
   });
 
   function submitCustomDeck() {
-    var $input = $("#custom_cardcast_code");
+    var $input = $("#custom_cardcast_code:visible, .custom_cardcast_code:visible").last();
+    if (!$input.length) $input = $("#custom_cardcast_code");
+    
     var code = $.trim($input.val().toUpperCase());
-    var $status = $("#custom_cardcast_status");
+    var $status = $(".custom_cardcast_status, #custom_cardcast_status");
 
     if (!code) {
-      $status.css("color", "red").text("Inserisci un codice valido!");
+      $status.css("color", "#d32f2f").text("Inserisci un codice valido!");
       return;
     }
 
@@ -35,46 +36,53 @@ $(document).ready(function() {
     if ($gameChatInput.length) {
       $status.css("color", "#1976D2").text("Aggiunta del mazzo " + code + " in corso...");
       
-      // Invia comando al server
+      // Invia comando chat al server
       $gameChatInput.val("/addcardcast " + code);
       $gameChatBtn.click();
       $input.val("");
     } else {
-      $status.css("color", "red").text("Errore: chat della partita non trovata.");
+      $status.css("color", "#d32f2f").text("Errore: chat della partita non trovata.");
     }
   }
 
-  // Monitora i messaggi in chat per intercettare i dettagli del mazzo caricato
-  var originalChatHandler = cah.log.info;
+  // Monitora il testo della chat
   setInterval(function() {
     $(".log").each(function() {
-      var logHtml = $(this).html();
-      // Cerca il pattern: Added: Cardcast deck 'Nome' (code: CODICE), with X black cards and Y white cards.
-      var regex = /Added: Cardcast deck '([^']+)' \(code: ([A-Z0-9]+)\), with (\d+) black cards and (\d+) white cards/g;
+      var logText = $(this).text();
+
+      // Cerca il messaggio in chiaro (indipendentemente dai tag HTML interni)
+      // Esempio: Added: Cardcast deck 'Meme calta' (code: HVHST), with 2 black cards and 31 white cards.
+      var regex = /Added:\s*Cardcast\s*deck\s*['"‘](.+?)['"’]\s*\(code:\s*([A-Za-z0-9]+)\),\s*with\s*(\d+)\s*black cards\s*and\s*(\d+)\s*white cards/gi;
       var match;
-      while ((match = regex.exec(logHtml)) !== null) {
+
+      while ((match = regex.exec(logText)) !== null) {
         var deckName = match[1];
-        var deckCode = match[2];
+        var deckCode = match[2].toUpperCase();
         var blackCards = match[3];
         var whiteCards = match[4];
 
         addDeckToUiList(deckName, deckCode, blackCards, whiteCards);
       }
     });
-  }, 1000);
+  }, 600);
 
   function addDeckToUiList(name, code, blackCount, whiteCount) {
     if (window.loadedCardcastDecks.indexOf(code) !== -1) {
-      return; // Già mostrato
+      return; // Evita duplicati
     }
     window.loadedCardcastDecks.push(code);
 
-    $("#custom_cardcast_list_container").show();
+    var $container = $(".custom_cardcast_list_container, #custom_cardcast_list_container");
+    var $list = $(".custom_cardcast_list, #custom_cardcast_list");
+    var $status = $(".custom_cardcast_status, #custom_cardcast_status");
+
+    $container.show();
     var $li = $("<li>")
       .attr("data-code", code)
-      .html("<strong>" + name + "</strong> (" + code + ") — <span style='color:#666;'>" + blackCount + " nere, " + whiteCount + " bianche</span>");
+      .css({"margin-bottom": "4px"})
+      .html("<strong>" + name + "</strong> (<code style='background:#e3f2fd; padding:1px 4px; border-radius:3px;'>" + code + "</code>) — <span style='color:#555;'>" + blackCount + " nere, " + whiteCount + " bianche</span>");
     
-    $("#custom_cardcast_list").append($li);
-    $("#custom_cardcast_status").css("color", "green").text("Mazzo '" + name + "' aggiunto con successo!");
+    $list.append($li);
+    $status.css("color", "#2e7d32").text("Mazzo '" + name + "' aggiunto con successo!");
   }
 });
