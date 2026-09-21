@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Pretend You're Xyzzy</title>
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
@@ -28,6 +29,7 @@
 <script type="text/javascript" src="js/cah.app.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
 <link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="smartphone.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
 <jsp:include page="analytics.jsp" />
 </head>
@@ -110,6 +112,11 @@
 <div id="bottom" class="hide">
   <div id="info_area">
   </div>
+  <input type="checkbox" id="chat_collapse_toggle" class="chat_toggle_cb" style="display: none;" />
+  <label for="chat_collapse_toggle" class="chat_toggle_bar">
+    <span class="chat_toggle_title">💬 Chat</span>
+    <span class="chat_toggle_status"></span>
+  </label>
   <div id="tabs">
     <ul>
       <li><a href="#tab-preferences" class="tab-button">Preferenze Utente</a></li>
@@ -513,6 +520,15 @@
     </div>
     
     <!-- 3. Mazzi Personalizzati Cardcast -->
+    <!-- Switch Toggle Mazzi Personalizzati (Visibile solo su Mobile) -->
+    <div class="cardcast_toggle_row">
+      <span class="cardcast_toggle_title">🃏 Mazzi Personalizzati</span>
+      <label class="material_switch" for="cardcast_toggle_cb">
+        <input type="checkbox" id="cardcast_toggle_cb">
+        <span class="switch_slider"></span>
+      </label>
+    </div>
+
     <fieldset class="cardcast_custom_sets" style="margin: 0 0 12px 0; padding: 10px 14px; border: 2px solid #2196F3; border-radius: 8px; background: #f8fbff; flex-shrink: 0;">
       <legend style="font-weight: bold; color: #1976D2;">🃏 Mazzi Personalizzati (cast.clrtd.com)</legend>
       <p style="margin: 0 0 8px 0; font-size: 13px; color: #333;">
@@ -533,6 +549,15 @@
     </fieldset>
 
     <!-- 4. Sezione Mazzi Standard (si espande fino in fondo) -->
+    <!-- Switch Toggle Mazzi Standard (Visibile solo su Mobile) -->
+    <div class="deck_toggle_row standard_toggle_row">
+      <span class="deck_toggle_title">📦 Mazzi Standard</span>
+      <label class="material_switch" for="standard_decks_toggle_cb">
+        <input type="checkbox" id="standard_decks_toggle_cb">
+        <span class="switch_slider"></span>
+      </label>
+    </div>
+
     <fieldset class="card_sets">
       <legend style="font-weight: 700; color: #24292f;">Mazzi di Carte Standard</legend>
       <span class="base_card_sets"></span>

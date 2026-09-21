@@ -831,10 +831,6 @@ body:has(#main_holder:not(:empty)) #canvas {
   display: none !important;
 }
 
-
-
-
-
 /* AA. CARTE MATERIAL DESIGN (.card, .blackcard, .whitecard) */
 
 /* BB. Struttura base carta (.card) */
