@@ -56,14 +56,15 @@
   </ul>
   <h2>Benvenuto nel server di gioco! Puoi giocare assieme ai tuoi amici semplicemente entrando nella stessa stanza di gioco o creandone una nuova.</h2>
   <div id="nickbox">
-    <label for="nickname">Nome utente (Nickname):</label>
+    <label for="nickname">Nickname:</label>
     <input type="text" id="nickname" value="" maxlength="30" role="textbox"
-        aria-label="Inserisci il tuo nickname." data-lpignore="true" />
+        aria-label="Inserisci Il Tuo Nickname" data-lpignore="true" />
     <label for="idcode">
-    <dfn title="Disponibile solo via HTTPS. Fornisci un codice segreto di identificazione per autenticarti nella chat.">
-    Codice di identificazione facoltativo:</dfn></label>
-    <input type="password" id="idcode" value="" maxlength="100" disabled="disabled"
-        aria-label="Opzionalmente inserisci un codice di identificazione." />
+    <dfn title="Fornisci un codice segreto di identificazione per autenticarti nella chat (opzionale).">
+    Codice Identificazione (Facoltativo):</dfn></label>
+    <input type="password" id="idcode" value="" maxlength="100"
+      placeholder="Opzionale (Lascia Vuoto Se Non Ne Hai Uno)"
+      aria-label="Opzionalmente inserisci un codice di identificazione." />
     <a href="https://github.com/ajanata/PretendYoureXyzzy/wiki/Identification-Codes">(Guida)</a>
     <input type="button" id="nicknameconfirm" value="Entra" />
     <span id="nickbox_error" class="error"></span>
