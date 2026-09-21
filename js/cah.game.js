@@ -309,7 +309,10 @@ cah.Game = function(id) {
   $("input", this.optionsElement_).blur(cah.bind(this, this.optionChanged_));
   $(".timer_multiplier", this.optionsElement_).change(cah.bind(this, this.optionChanged_));
   $(".card_set", this.optionsElement_).change(cah.bind(this, this.optionChanged_));
-  $(".game_hide_password", this.optionsElement_).click(cah.bind(this, this.showOrHidePassword_));
+  
+  // Supporta sia la vecchia classe che il nuovo pulsante icona occhio
+  $(".game_hide_password, .game_toggle_password", this.optionsElement_).click(
+      cah.bind(this, this.showOrHidePassword_));
 
   $(window).on("resize.game_" + this.id_, cah.bind(this, this.windowResize_));
 };
@@ -392,20 +395,24 @@ cah.Game.prototype.showOptionsClick_ = function() {
 };
 
 /**
- * Show or hide the game's password, based on the value of the checkbox.
+ * Mostra o nasconde la password alternando type='password' e type='text'
+ * e aggiornando lo stato visivo dell'icona dell'occhio.
  * 
  * @private
  */
-cah.Game.prototype.showOrHidePassword_ = function() {
-  if ($(".game_hide_password", this.optionsElement_).attr("checked")) {
-    $(".game_password", this.optionsElement_).hide();
-    $(".game_fake_password", this.optionsElement_).show();
-    $(".game_fake_password", this.optionsElement_).attr("value",
-        $(".game_password", this.optionsElement_).attr("value"));
-    $(".game_fake_password", this.optionsElement_).attr("disabled", "disabled");
+cah.Game.prototype.showOrHidePassword_ = function(e) {
+  if (e) {
+    e.preventDefault();
+  }
+  var $passwordInput = $(".game_password", this.optionsElement_);
+  var $toggleBtn = $(".game_toggle_password, .game_hide_password", this.optionsElement_);
+
+  if ($passwordInput.attr("type") === "password") {
+    $passwordInput.attr("type", "text");
+    $toggleBtn.addClass("revealed").attr("title", "Nascondi password").attr("aria-label", "Nascondi password");
   } else {
-    $(".game_password", this.optionsElement_).show();
-    $(".game_fake_password", this.optionsElement_).hide();
+    $passwordInput.attr("type", "password");
+    $toggleBtn.removeClass("revealed").attr("title", "Mostra password").attr("aria-label", "Mostra password");
   }
 };
 
@@ -875,7 +882,7 @@ cah.Game.prototype.updateGameStatus = function(data) {
   $(".game_password", this.optionsElement_).val(options[cah.$.GameOptionData.PASSWORD]);
   $(".timer_multiplier", this.optionsElement_).val(options[cah.$.GameOptionData.TIMER_MULTIPLIER]);
 
-  var cardSetIds = options[cah.$.GameOptionData.CARD_SETS];// .split(',');
+  var cardSetIds = options[cah.$.GameOptionData.CARD_SETS];
   $(".card_set", this.optionsElement_).removeAttr("checked");
   for ( var key in cardSetIds) {
     var cardSetId = cardSetIds[key];
@@ -905,7 +912,6 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
   var playerStatus = playerInfo[cah.$.GamePlayerInfo.STATUS];
   var panel = this.scoreCards_[playerName];
   if (!panel) {
-    // new score panel
     panel = new cah.GameScorePanel(playerName);
     if (this.firstSpectatorElement_) {
       $(this.firstSpectatorElement_).before(panel.getElement());
@@ -914,7 +920,6 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
     }
     this.scoreCards_[playerName] = panel;
   }
-  var oldStatus = panel.getStatus();
   panel.update(playerInfo[cah.$.GamePlayerInfo.SCORE], playerStatus);
 
   if (playerName == cah.nickname) {
@@ -951,14 +956,7 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
   }
 
   if (oldStatus == cah.$.GamePlayerStatus.PLAYING && playerStatus == cah.$.GamePlayerStatus.IDLE) {
-    // this player played a card. display a face-down white card in the area, or nothing if it is
-    // us. we put the card there when we get the acknowledgement from the server from playing.
-    // also, don't put the card up if we're already into judging state -- we already displayed all
-    // of the cards!
     if (playerName != cah.nickname && this.state_ == cah.$.GameState.PLAYING) {
-      // TODO make this not suck for multiple selection. it only shows one card when they're done.
-      // TODO have some sort of way to know, from the server, how far along everybody is playing
-      // for multi-play
       this.addRoundWhiteCard_(Array(new cah.card.WhiteCard()));
     }
   }
@@ -973,7 +971,6 @@ cah.Game.prototype.updateUserStatus = function(playerInfo) {
 cah.Game.prototype.updateSpectator = function(spectator) {
   var panel = this.scoreCards_[spectator];
   if (!panel) {
-    // new score panel
     panel = new cah.GameScorePanel(spectator);
     $(this.scoreboardElement_).append(panel.getElement());
     this.scoreCards_[spectator] = panel;
@@ -1016,14 +1013,12 @@ cah.Game.prototype.roundComplete = function(data) {
   }
   cah.log.status_with_game(this, msg, undefined, true);
 
-  // update the previous round display
   $(".game_last_round_winner", this.element_).text(roundWinner);
   $(".game_last_round_cards", this.element_).empty().append(
       $(".game_white_card_wrapper .card_holder", this.element_).clone());
   this.lastBlackCard_ = this.blackCard_;
   $(".game_show_last_round", this.element_).removeAttr("disabled");
 
-  // speak it in screen readers
   cah.log.ariaStatus("The round was won by " + roundWinner + " with " + ariaText);
 };
 
@@ -1105,12 +1100,11 @@ cah.Game.prototype.confirmClick_ = function() {
       var ajax = cah.Ajax.build(cah.$.AjaxOperation.PLAY_CARD).withGameId(this.id_).withCardId(
           this.handSelectedCard_.getServerId());
       if (this.handSelectedCard_.isBlankCard()) {
-        // blank card
         var text = prompt("What would you like this card to say?", "");
         if (text == null || text == '') {
           return;
         }
-        text = $("<div/>").text(text).html(); // html sanitise
+        text = $("<div/>").text(text).html();
         this.handSelectedCard_.setText(text);
         ajax = ajax.withMessage(text);
       }
@@ -1142,24 +1136,19 @@ cah.Game.prototype.handCardClick_ = function(e) {
   if (!this.canSelectCard_) {
     return;
   }
-  // judge can't select a card.
   if (this.judge_ == cah.nickname) {
     return;
   }
-  // this player isn't in playing state
   var scorecard = this.scoreCards_[cah.nickname];
   if (scorecard && scorecard.getStatus() != cah.$.GamePlayerStatus.PLAYING) {
     return;
   }
-  /** @type {cah.card.WhiteCard} */
   var card = e.data.card;
 
-  // remove style from existing selected card
   if (this.handSelectedCard_) {
     $(".card", this.handSelectedCard_.getElement()).removeClass("selected");
   }
 
-  // if the user clicked on the same card, deselect it.
   if (card == this.handSelectedCard_) {
     this.handSelectedCard_ = null;
     $(".confirm_card", this.element_).attr("disabled", "disabled");
@@ -1194,20 +1183,16 @@ cah.Game.prototype.roundCardClick_ = function(e) {
   if (!this.canSelectCard_) {
     return;
   }
-  // this player isn't in judging state.
   var scorecard = this.scoreCards_[cah.nickname];
   if (scorecard && scorecard.getStatus() != cah.$.GamePlayerStatus.JUDGING) {
     return;
   }
-  /** @type {cah.card.WhiteCard} */
   var card = e.data.card;
 
-  // remove style from existing selected card
   if (this.roundSelectedCard_) {
     $(".card", this.roundSelectedCard_.getElement()).removeClass("selected");
   }
 
-  // if the user clicked on the same card, deselect it.
   if (card == this.roundSelectedCard_) {
     this.roundSelectedCard_ = null;
     $(".confirm_card", this.element_).attr("disabled", "disabled");
@@ -1226,8 +1211,6 @@ cah.Game.prototype.roundCardClick_ = function(e) {
  * @private
  */
 cah.Game.prototype.leaveGameClick_ = function() {
-  // TODO make sure everything cleans up right, I got an error when I tried to start a different
-  // game after leaving one
   if (confirm("Are you sure you wish to leave the game?")) {
     cah.Ajax.build(cah.$.AjaxOperation.LEAVE_GAME).withGameId(this.id_).run();
     $(this.chatElement_).detach();
@@ -1242,7 +1225,6 @@ cah.Game.prototype.leaveGameClick_ = function() {
  * @private
  */
 cah.Game.prototype.startGameClick_ = function() {
-  // TODO make the button go disabled
   cah.Ajax.build(cah.$.AjaxOperation.START_GAME).withGameId(this.id_).run();
 };
 
@@ -1268,7 +1250,6 @@ cah.Game.prototype.stopGameClick_ = function() {
 cah.Game.prototype.playCardComplete = function() {
   if (this.handSelectedCard_) {
     $(".card", this.handSelectedCard_.getElement()).removeClass("selected");
-    // TODO support for multiple play, though it seems to be working now...
     this.removeCardFromHand(this.handSelectedCard_);
     this.addRoundWhiteCard_(Array(this.handSelectedCard_));
     this.handSelectedCard_ = null;
@@ -1412,11 +1393,9 @@ cah.Game.prototype.stateChange = function(data) {
     case cah.$.GameState.LOBBY:
       this.removeAllCards();
       this.judge_ = null;
-      $(".game_hand_filter", this.element_).addClass("hide"); // in case they were the judge last
+      $(".game_hand_filter", this.element_).addClass("hide");
       $("#stop_game").hide();
-      // round
       this.showOptions_();
-
       break;
 
     case cah.$.GameState.PLAYING:
@@ -1476,8 +1455,8 @@ cah.Game.prototype.updateOptionsEnabled_ = function() {
     $("select", this.optionsElement_).attr("disabled", "disabled");
     $("input", this.optionsElement_).attr("disabled", "disabled");
     $(".options_host_only", this.optionsElement_).removeClass("hide");
-    // let all players adjust the "hide password" option themselves
-    $(".game_hide_password", this.optionsElement_).removeAttr("disabled");
+    // Consenti sempre a tutti i giocatori di mostrare/nascondere la password inserita
+    $(".game_toggle_password, .game_hide_password", this.optionsElement_).removeAttr("disabled");
   }
 };
 
@@ -1488,8 +1467,8 @@ cah.Game.prototype.updateOptionsEnabled_ = function() {
  * @private
  */
 cah.Game.prototype.optionChanged_ = function(e) {
-  // don't update the server for the 'hide password' option
-  if (e.target.classList.contains('game_hide_password')) {
+  // Ignora il click sul toggle password
+  if (e.target.classList.contains('game_toggle_password') || e.target.classList.contains('game_hide_password')) {
     return;
   }
 
@@ -1539,36 +1518,12 @@ cah.Game.prototype.getChatElement = function() {
  * @constructor
  */
 cah.GameScorePanel = function(player) {
-  /**
-   * Player name.
-   * 
-   * @type {String}
-   * @private
-   */
   this.player_ = player;
-
-  /**
-   * @type {HTMLDivElement}
-   * @private
-   */
   this.element_ = $("#scorecard_template").clone()[0];
   this.element_.id = "";
   $(this.element_).removeClass("hide");
 
-  /**
-   * The score on this scorecard.
-   * 
-   * @type {Number}
-   * @private
-   */
   this.score_ = 0;
-
-  /**
-   * The status of the player for this scorecard.
-   * 
-   * @type {cah.$.GamePlayerStatus}
-   * @private
-   */
   this.status_ = cah.$.GamePlayerStatus.IDLE;
 
   $(".scorecard_player", this.element_).text(player);
@@ -1579,18 +1534,8 @@ cah.GameScorePanel.prototype.getElement = function() {
   return this.element_;
 };
 
-/**
- * Update the score panel.
- * 
- * TODO add some color for different statuses
- * 
- * @param {Number}
- *          score The player's score
- * @param {cah.$.GamePlayerStatus}
- *          status The player's status.
- */
 cah.GameScorePanel.prototype.update = function(score, status) {
-  this.score_ = score;
+  this.score = score;
   this.status_ = status;
   $(".scorecard_score", this.element_).text(score);
   $(".scorecard_status", this.element_).text(cah.$.GamePlayerStatus_msg[status]);
@@ -1607,15 +1552,6 @@ cah.GameScorePanel.prototype.update = function(score, status) {
   }
 };
 
-/**
- * @returns {cah.$.GamePlayerStatus} The status of the player represented by this panel.
- */
 cah.GameScorePanel.prototype.getStatus = function() {
   return this.status_;
 };
-
-/*
- * confirm card as judge without selecting a round card did ... something
- * 
- * don't always see your card after playing it
- */

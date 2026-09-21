@@ -2,7 +2,9 @@
    PRETEND YOU'RE XYZZY - MODERN RESPONSIVE MATERIAL THEME
    ========================================================================== */
 
-/* --- 1. RESET E BASE (BLOCCATO RIGIDO A 100% SCHERMO) --- */
+/* AA. RESET E BASE (BLOCCATO RIGIDO A 100% SCHERMO) */
+
+/* BB. Reset selettori universali */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -11,6 +13,7 @@
   display: none;
 }
 
+/* BB. Documento e Body */
 html, body, #gamebody {
   height: 100vh;
   height: 100dvh;
@@ -28,7 +31,10 @@ body#gamebody {
   flex-direction: column;
 }
 
-/* --- 2. SCHERMATA LOGIN / WELCOME --- */
+
+/* AA. SCHERMATA LOGIN / WELCOME */
+
+/* BB. Box contenitore Welcome */
 #welcome {
   max-width: 520px;
   margin: auto;
@@ -44,6 +50,7 @@ body#gamebody {
   max-height: 90vh;
 }
 
+/* BB. Tipografia Welcome */
 #welcome h1 {
   font-size: 2.2rem;
   font-weight: 900;
@@ -58,6 +65,14 @@ body#gamebody {
   margin-bottom: 20px;
 }
 
+#welcome p, #welcome ul, #welcome h2 {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.4;
+  margin: 6px 0;
+}
+
+/* BB. Form Nickname e controlli */
 #welcome #nickbox {
   width: 100%;
   display: flex;
@@ -97,26 +112,36 @@ body#gamebody {
   background: #1565c0;
 }
 
-#welcome p, #welcome ul, #welcome h2 {
-  font-size: 12px;
-  color: #777;
-  line-height: 1.4;
-  margin: 6px 0;
-}
 
-/* --- 3. BARRA SUPERIORE & CONTENITORE PRINCIPALE (#canvas) --- */
-/* Altezza esattamente calibrata: 100dvh meno i 220px fissi della barra chat */
+/* AA. BARRA SUPERIORE & CONTENITORE PRINCIPALE (#canvas) */
+
+/* BB. Canvas principale (in lobby standard con chat attiva: 240px) */
 #canvas {
-  height: calc(100dvh - 220px) !important;
-  max-height: calc(100dvh - 220px) !important;
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
+  height: calc(100dvh - 240px) !important;
+  max-height: calc(100dvh - 240px) !important;
+  flex: 0 0 calc(100dvh - 240px) !important;
   width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
 }
 
+/* Quando si aprono Preferenze o Filtri Mazzi: canvas cede spazio per far vedere tutto il contenuto */
+body:has(#tabs ul li.ui-tabs-active a[href="#tab-preferences"]) #canvas,
+body:has(#tabs ul li.ui-tabs-active a[href="#tab-gamelist-filters"]) #canvas {
+  height: calc(100dvh - 340px) !important;
+  max-height: calc(100dvh - 340px) !important;
+  flex: 0 0 calc(100dvh - 340px) !important;
+}
+
+/* In Partita (#main_holder non è vuoto): canvas si adatta ai 220px di bottom */
+body:has(#main_holder:not(:empty)) #canvas {
+  height: calc(100dvh - 220px) !important;
+  max-height: calc(100dvh - 220px) !important;
+  flex: 0 0 calc(100dvh - 220px) !important;
+}
+
+/* BB. Menubar superiore */
 #menubar {
   background-color: #1a1a1a !important;
   color: #ffffff !important;
@@ -138,6 +163,7 @@ body#gamebody {
   gap: 8px !important;
 }
 
+/* BB. Pulsanti e controlli della Menubar */
 #menubar input[type="button"], #menubar input[type="text"] {
   height: 32px !important;
   padding: 0 12px !important;
@@ -183,7 +209,10 @@ body#gamebody {
   background: #b71c1c !important;
 }
 
-/* --- 4. ZONA CENTRALE (#main: LOBBY & STANZA) --- */
+
+/* AA. ZONA CENTRALE (#main: LOBBY & STANZA) */
+
+/* BB. Main container */
 #main {
   height: calc(100% - 48px) !important;
   max-height: calc(100% - 48px) !important;
@@ -198,7 +227,7 @@ body#gamebody {
   position: relative !important;
 }
 
-/* Griglia lobby predefinita quando si cercano stanze */
+/* BB. Lista stanze lobby (#game_list) */
 #game_list {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
@@ -209,12 +238,13 @@ body#gamebody {
   align-content: flex-start !important;
 }
 
-/* NASCONDE CATEGORICAMENTE LA LISTA STANZE QUANDO SIAMO IN UNA PARTITA */
+/* Nasconde categoricamente la lista stanze quando siamo in una partita */
 #main_holder:not(:empty) ~ #game_list,
 #main:has(#main_holder:not(:empty)) #game_list {
   display: none !important;
 }
 
+/* BB. Card singola lobby (.gamelist_lobby) */
 .gamelist_lobby {
   background: #ffffff !important;
   border-radius: 12px !important;
@@ -256,6 +286,7 @@ body#gamebody {
   cursor: pointer !important;
 }
 
+/* BB. Contenitore dinamico della partita (#main_holder) */
 #main_holder {
   width: 100% !important;
   height: 100% !important;
@@ -270,7 +301,10 @@ body#gamebody {
   display: none !important;
 }
 
-/* --- 5. STRUTTURA PARTITA (.game) & BARRA STANZA (.game_top) --- */
+
+/* AA. STRUTTURA PARTITA (.game) & BARRA STANZA (.game_top) */
+
+/* BB. Struttura base partita (.game) */
 .game {
   width: 100% !important;
   height: 100% !important;
@@ -281,7 +315,7 @@ body#gamebody {
   overflow: hidden !important;
 }
 
-/* Barra superiore della stanza: compatta e stilizzata */
+/* BB. Barra superiore della stanza (.game_top) */
 .game_top {
   height: 38px !important;
   min-height: 38px !important;
@@ -299,6 +333,7 @@ body#gamebody {
   flex-shrink: 0 !important;
 }
 
+/* CC. Badge stanza */
 .game_room_badge {
   display: inline-flex !important;
   align-items: center !important;
@@ -312,6 +347,7 @@ body#gamebody {
   white-space: nowrap !important;
 }
 
+/* CC. Messaggi di stato */
 .game_message {
   font-size: 13px !important;
   font-weight: 600 !important;
@@ -323,6 +359,7 @@ body#gamebody {
   text-align: center !important;
 }
 
+/* CC. Azioni barra stanza e toggle */
 .game_top_actions {
   display: flex !important;
   align-items: center !important;
@@ -345,6 +382,7 @@ body#gamebody {
   cursor: pointer !important;
 }
 
+/* BB. Area corpo partita (.game_body_area) */
 .game_body_area {
   flex: 1 1 auto !important;
   height: calc(100% - 48px) !important;
@@ -354,7 +392,10 @@ body#gamebody {
   overflow: hidden !important;
 }
 
-/* --- 6. LE OPZIONI DI GIOCO (.game_options) A TUTTO SCHERMO --- */
+
+/* AA. LE OPZIONI DI GIOCO (.game_options) */
+
+/* BB. Contenitore opzioni e avvisi host */
 .game_options {
   background: #ffffff !important;
   border-radius: 12px !important;
@@ -380,7 +421,89 @@ body#gamebody {
   border-radius: 6px !important;
 }
 
-/* Elenco Mazzi Standard: prende tutto lo spazio rimanente in altezza e scorre internamente */
+/* BB. Password partita e toggle visibilità occhio */
+.game_password_box {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 12px !important;
+  padding: 8px 14px !important;
+  background: #f6f8fa !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 8px !important;
+}
+
+.game_password_box label {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: #24292f !important;
+  margin: 0 !important;
+}
+
+.password_input_wrapper {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.password_input_wrapper .game_password {
+  width: 220px !important;
+  height: 34px !important;
+  margin: 0 !important;
+  padding: 0 38px 0 12px !important;
+  border: 1px solid #d0d7de !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  font-size: 13px !important;
+  outline: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+  box-sizing: border-box !important;
+}
+
+.password_input_wrapper .game_password:focus {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15) !important;
+}
+
+/* Pulsante icona occhio dentro il campo */
+.game_toggle_password {
+  position: absolute !important;
+  right: 6px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 28px !important;
+  height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  color: #6e7781 !important;
+  border-radius: 4px !important;
+  padding: 0 !important;
+  transition: color 0.15s, background-color 0.15s !important;
+}
+
+.game_toggle_password:hover {
+  color: #1976d2 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Gestione alternanza occhio aperto / occhio barrato */
+.game_toggle_password .eye_closed {
+  display: none !important;
+}
+.game_toggle_password.revealed .eye_open {
+  display: none !important;
+}
+.game_toggle_password.revealed .eye_closed {
+  display: block !important;
+  color: #1976d2 !important;
+}
+
+/* BB. Elenco Mazzi di Carte Standard */
 .game_options .card_sets {
   flex: 1 1 auto !important;
   min-height: 80px !important;
@@ -400,7 +523,10 @@ body#gamebody {
   font-size: 12.5px !important;
 }
 
-/* --- 6.1 TAVOLO DI GIOCO DURANTE IL ROUND (.game_board & .game_hand) --- */
+
+/* AA. TAVOLO DI GIOCO DURANTE IL ROUND */
+
+/* BB. Tavolo da gioco (.game_board) */
 .game_board {
   flex: 1 1 auto !important;
   min-height: 0 !important;
@@ -417,6 +543,7 @@ body#gamebody {
   display: none !important; /* Finché le opzioni sono visibili, non mostrare carte vuote */
 }
 
+/* CC. Colonne carte nere e carte giocate */
 .game_left_side, .game_right_side {
   display: flex !important;
   flex-direction: column !important;
@@ -430,6 +557,7 @@ body#gamebody {
   overflow-x: auto !important;
 }
 
+/* BB. Mano di carte del giocatore (.game_hand) */
 .game_hand {
   height: 190px !important;
   min-height: 190px !important;
@@ -453,26 +581,10 @@ body#gamebody {
   align-items: center !important;
 }
 
-/* Quando sei dentro una partita (#main_holder contiene la stanza),
-   nascondi le tab "Preferenze Utente" e "Filtri Mazzi Stanze" */
-#main_holder:not(:empty) ~ #bottom #tabs ul li:has(a[href="#tab-preferences"]),
-#main_holder:not(:empty) ~ #bottom #tabs ul li:has(a[href="#tab-gamelist-filters"]),
-body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-preferences"]),
-body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-gamelist-filters"]) {
-  display: none !important;
-}
 
-/* Stile per i tab della chat della stanza */
-#tabs div[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
-  display: block !important;
-  position: relative !important;
-  height: calc(100% - 38px) !important;
-  padding: 8px 12px 50px 12px !important;
-  box-sizing: border-box !important;
-  background: #ffffff !important;
-}
+/* AA. CARTE MATERIAL DESIGN */
 
-/* --- 7. CARTE MATERIAL DESIGN --- */
+/* BB. Struttura base carta (.card) */
 .card {
   width: 150px;
   min-width: 140px;
@@ -488,30 +600,37 @@ body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-gamelist-filters
   position: relative;
 }
 
+/* BB. Carta Nera (.blackcard) */
 .blackcard {
   background-color: #121212 !important;
   color: #ffffff !important;
   border: 1px solid #222 !important;
 }
 
+/* BB. Carta Bianca (.whitecard) */
 .whitecard {
   background-color: #ffffff !important;
   color: #111111 !important;
   border: 1px solid #e0e0e0 !important;
 }
 
+/* BB. Testo della carta */
 .card_text {
   font-size: 14px;
   font-weight: 700;
   line-height: 1.35;
 }
 
-/* --- 8. BARRA INFERIORE: GIOCATORI (25%) & CHAT (75%) SEMPRE ANCORATI --- */
+
+/* AA. BARRA INFERIORE & TABS */
+
+/* BB. Layout base barra inferiore (#bottom): fissa a terra a 240px in lobby con chat */
 #bottom {
-  height: 220px !important;
-  min-height: 220px !important;
-  max-height: 220px !important;
-  flex: 0 0 220px !important; /* Impedisce che venga schiacciato o spinto via */
+  height: 240px !important;
+  min-height: 240px !important;
+  max-height: 240px !important;
+  flex: 0 0 240px !important;
+  width: 100% !important;
   background: #ffffff !important;
   border-top: 1px solid #d0d7de !important;
   display: flex !important;
@@ -521,33 +640,52 @@ body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-gamelist-filters
   overflow: hidden !important;
 }
 
-/* 25% Sinistra: Lista giocatori stanza */
-#info_area {
+/* Quando si aprono Preferenze o Filtri Mazzi: altezza portata a 340px per non tagliare colonne e pulsanti */
+body:has(#tabs ul li.ui-tabs-active a[href="#tab-preferences"]) #bottom,
+body:has(#tabs ul li.ui-tabs-active a[href="#tab-gamelist-filters"]) #bottom {
+  height: 340px !important;
+  min-height: 340px !important;
+  max-height: 340px !important;
+  flex: 0 0 340px !important;
+}
+
+/* CC. Stato Lobby (quando #main_holder è vuoto): info_area nascosta e tabs al 100% */
+body:not(:has(#main_holder:not(:empty))) #info_area {
+  display: none !important;
+}
+body:not(:has(#main_holder:not(:empty))) #tabs {
+  width: 100% !important;
+}
+
+/* CC. Stato Partita (quando #main_holder contiene la stanza): altezza a 220px, scoreboard 25%, tabs 75% */
+body:has(#main_holder:not(:empty)) #bottom {
+  height: 220px !important;
+  min-height: 220px !important;
+  max-height: 220px !important;
+  flex: 0 0 220px !important;
+}
+body:has(#main_holder:not(:empty)) #info_area {
   width: 25% !important;
-  min-width: 220px !important;
+  min-width: 200px !important;
   max-width: 320px !important;
   border-right: 1px solid #d0d7de !important;
   overflow-y: auto !important;
   background: #fafbfc !important;
   padding: 8px !important;
   box-sizing: border-box !important;
+  display: block !important;
+}
+body:has(#main_holder:not(:empty)) #tabs {
+  width: 75% !important;
 }
 
-.scoreboard {
-  width: 100% !important;
-  height: 100% !important;
+/* In Partita nascondi le tab "Preferenze" e "Filtri" */
+body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-preferences"]),
+body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-gamelist-filters"]) {
+  display: none !important;
 }
 
-.scorecard {
-  padding: 8px 12px !important;
-  border-bottom: 1px solid #eaeaea !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  font-size: 13px !important;
-}
-
-/* 75% Destra: Tab Chat */
+/* BB. Contenitore Schede (#tabs) */
 #tabs {
   width: 75% !important;
   flex: 1 1 auto !important;
@@ -563,7 +701,7 @@ body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-gamelist-filters
   display: none !important;
 }
 
-/* Intestazione tab */
+/* CC. Intestazione schede (#tabs ul) */
 #tabs ul {
   display: flex !important;
   list-style: none !important;
@@ -599,9 +737,9 @@ body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-gamelist-filters
   margin-bottom: -1px !important;
 }
 
-/* Finestra messaggi chat attiva */
+/* CC. Pannelli Chat (#tab-global e chat di gioco) */
 #tab-global:not(.ui-tabs-hide):not([aria-hidden="true"]),
-div[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
+#tabs div[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
   display: block !important;
   position: relative !important;
   height: calc(100% - 38px) !important;
@@ -620,7 +758,7 @@ div[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
   border-radius: 6px !important;
 }
 
-/* Riga input e invio chat sempre fissa sul fondo */
+/* CC. Controlli inserimento chat ancorati sul fondo */
 #tabs .chat {
   position: absolute !important;
   left: 12px !important;
@@ -656,10 +794,315 @@ div[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
   background: #1565c0 !important;
 }
 
-/* Preferenze e filtri */
-#tab-preferences, #tab-gamelist-filters {
-  height: calc(100% - 38px) !important;
-  overflow-y: auto !important;
-  padding: 12px 18px !important;
+/* Stile ordinato per la scheda giocatore nello scoreboard */
+.scorecard {
+  padding: 6px 10px !important;
+  margin-bottom: 6px !important;
   background: #ffffff !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.scorecard_player {
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  color: #1a1a1a !important;
+}
+
+.scorecard_points {
+  font-size: 12px !important;
+  color: #1976d2 !important;
+  font-weight: 600 !important;
+}
+
+.scorecard_status {
+  font-size: 11px !important;
+  color: #6e7781 !important;
+  font-style: italic !important;
+}
+
+/* AA. PANNELLI PREFERENZE & FILTRI MAZZI */
+
+/* BB. Struttura base comune pannelli (occupano lo spazio interno del tab e scrollano se necessario) */
+#tab-preferences,
+#tab-gamelist-filters,
+.preferences_panel,
+.filters_panel {
+  height: calc(100% - 38px) !important;
+  max-height: calc(100% - 38px) !important;
+  overflow-y: auto !important;
+  padding: 14px 18px !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+}
+
+/* BB. Intestazione e pulsanti azione (.pref_header) */
+.pref_header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid #e1e4e8 !important;
+  margin-bottom: 14px !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+.pref_title_group h4 {
+  margin: 0 0 2px 0 !important;
+  font-size: 15px !important;
+  color: #1a1a1a !important;
+  font-weight: 700 !important;
+}
+
+.pref_subtitle {
+  font-size: 12px !important;
+  color: #57606a !important;
+}
+
+.pref_actions {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.btn_primary, .btn_secondary {
+  height: 32px !important;
+  padding: 0 14px !important;
+  border-radius: 6px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+}
+
+.btn_primary {
+  background: #1976d2 !important;
+  border: 1px solid #1976d2 !important;
+  color: #ffffff !important;
+}
+.btn_primary:hover {
+  background: #1565c0 !important;
+}
+
+.btn_secondary {
+  background: #f6f8fa !important;
+  border: 1px solid #d0d7de !important;
+  color: #24292f !important;
+}
+.btn_secondary:hover {
+  background: #ebeef2 !important;
+}
+
+/* BB. Pannello Preferenze Utente (.pref_grid) */
+.pref_grid {
+  display: grid !important;
+  grid-template-columns: 1fr 280px !important;
+  gap: 16px !important;
+  align-items: start !important;
+}
+
+@media (max-width: 768px) {
+  .pref_grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* CC. Scheda interruttori preferenze */
+.pref_toggles_card {
+  background: #fbfcfd !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.custom_toggle_row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  cursor: pointer !important;
+}
+
+.custom_toggle_row input[type="checkbox"] {
+  width: 17px !important;
+  height: 17px !important;
+  margin-top: 2px !important;
+  cursor: pointer !important;
+  accent-color: #1976d2 !important;
+}
+
+.toggle_label_text {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.toggle_label_text strong {
+  font-size: 13px !important;
+  color: #24292f !important;
+}
+
+.toggle_label_text span {
+  font-size: 12px !important;
+  color: #57606a !important;
+  line-height: 1.3 !important;
+}
+
+/* CC. Scheda utenti ignorati */
+.pref_ignore_card {
+  background: #fbfcfd !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.pref_ignore_card label {
+  font-size: 13px !important;
+  color: #24292f !important;
+}
+
+.ignore_helper {
+  font-size: 11.5px !important;
+  color: #6e7781 !important;
+  margin: 2px 0 6px 0 !important;
+}
+
+.pref_ignore_card textarea {
+  width: 100% !important;
+  height: 90px !important;
+  padding: 8px !important;
+  border: 1px solid #d0d7de !important;
+  border-radius: 6px !important;
+  font-family: inherit !important;
+  font-size: 12px !important;
+  resize: vertical !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+}
+
+.pref_ignore_card textarea:focus {
+  border-color: #1976d2 !important;
+}
+
+/* BB. Pannello Filtri Mazzi Stanze (.filter_columns_container) */
+.filter_columns_container {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+  min-height: 140px !important;
+}
+
+@media (max-width: 800px) {
+  .filter_columns_container {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* CC. Colonna singola filtro */
+.filter_col {
+  background: #fbfcfd !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 10px !important;
+  padding: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.col_header {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+/* CC. Badge di stato filtri */
+.badge_status {
+  display: inline-block !important;
+  padding: 3px 8px !important;
+  border-radius: 5px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  width: fit-content !important;
+}
+
+.status_banned {
+  background: #ffebe9 !important;
+  color: #cf222e !important;
+}
+
+.status_neutral {
+  background: #f1f3f5 !important;
+  color: #495057 !important;
+}
+
+.status_required {
+  background: #dafbe1 !important;
+  color: #1a7f37 !important;
+}
+
+.col_desc {
+  font-size: 11px !important;
+  color: #6e7781 !important;
+}
+
+.filter_col select {
+  width: 100% !important;
+  height: 95px !important;
+  border: 1px solid #d0d7de !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  font-size: 12px !important;
+  padding: 4px !important;
+  outline: none !important;
+}
+
+.filter_col select:focus {
+  border-color: #1976d2 !important;
+}
+
+/* CC. Pulsanti di spostamento mazzi */
+.filter_btn_group {
+  display: flex !important;
+  gap: 6px !important;
+}
+
+.filter_btn_group.dual_actions {
+  justify-content: space-between !important;
+}
+
+.btn_filter_action {
+  flex: 1 !important;
+  height: 28px !important;
+  border-radius: 6px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  border: 1px solid #d0d7de !important;
+  background: #ffffff !important;
+  color: #24292f !important;
+  transition: all 0.15s !important;
+}
+
+.btn_filter_action:hover {
+  background: #f3f4f6 !important;
+}
+
+.btn_danger:hover {
+  background: #ffebe9 !important;
+  color: #cf222e !important;
+  border-color: #ff8182 !important;
+}
+
+.btn_success:hover {
+  background: #dafbe1 !important;
+  color: #1a7f37 !important;
+  border-color: #82e596 !important;
 }
