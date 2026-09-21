@@ -2,27 +2,27 @@
    PRETEND YOU'RE XYZZY - MODERN RESPONSIVE MATERIAL THEME
    ========================================================================== */
 
-/* --- 1. RESET E BASE (BLOCCATO A 100% SCHERMO) --- */
+/* --- 1. RESET E BASE (BLOCCATO RIGIDO A 100% SCHERMO) --- */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-/* REGOLA FONDAMENTALE: Nasconde tutti i template del gioco */
 .hide, [aria-hidden="true"] {
   display: none;
 }
 
 html, body, #gamebody {
+  height: 100vh;
   height: 100dvh;
   max-height: 100dvh;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Niente scroll della pagina intera: scorrono solo le sezioni interne */
+  overflow: hidden; /* Blocca categoricamente lo scroll della pagina intera */
 }
 
 body#gamebody {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #f0f2f5;
+  background-color: #eaedf0;
   color: #1a1a1a;
   display: flex;
   flex-direction: column;
@@ -97,24 +97,23 @@ body#gamebody {
   background: #1565c0;
 }
 
-#welcome #nicknameconfirm:active {
-  transform: scale(0.98);
-}
-
-#welcome p, #welcome ul, #welcome h2, #welcome #tweetbox {
+#welcome p, #welcome ul, #welcome h2 {
   font-size: 12px;
   color: #777;
   line-height: 1.4;
   margin: 6px 0;
 }
 
-/* --- 3. BARRA SUPERIORE & CANVAS CENTRALE --- */
+/* --- 3. BARRA SUPERIORE & CONTENITORE PRINCIPALE (#canvas) --- */
+/* Altezza esattamente calibrata: 100dvh meno i 220px fissi della barra chat */
 #canvas {
-  display: flex !important; /* Forza flex anche contro il .show() di jQuery */
-  flex-direction: column !important;
+  height: calc(100dvh - 220px) !important;
+  max-height: calc(100dvh - 220px) !important;
   flex: 1 1 auto !important;
   min-height: 0 !important;
   width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
   overflow: hidden !important;
 }
 
@@ -123,12 +122,12 @@ body#gamebody {
   color: #ffffff !important;
   height: 48px !important;
   min-height: 48px !important;
+  flex: 0 0 48px !important;
   padding: 0 16px !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
   justify-content: space-between !important;
-  flex-shrink: 0 !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
   z-index: 100 !important;
 }
@@ -184,26 +183,36 @@ body#gamebody {
   background: #b71c1c !important;
 }
 
-#filter_games {
-  background: #2b2b2b !important;
-}
-
-/* --- 4. ZONA CENTRALE (#main: TAVOLO DI GIOCO & STANZE) --- */
+/* --- 4. ZONA CENTRALE (#main: LOBBY & STANZA) --- */
 #main {
+  height: calc(100% - 48px) !important;
+  max-height: calc(100% - 48px) !important;
   flex: 1 1 auto !important;
   min-height: 0 !important;
   display: flex !important;
   flex-direction: column !important;
-  overflow-y: auto !important;
-  padding: 16px !important;
+  overflow: hidden !important;
+  padding: 12px 16px !important;
   background: #eaedf0 !important;
+  box-sizing: border-box !important;
+  position: relative !important;
 }
 
+/* Griglia lobby predefinita quando si cercano stanze */
 #game_list {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
   gap: 16px !important;
   width: 100% !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  align-content: flex-start !important;
+}
+
+/* NASCONDE CATEGORICAMENTE LA LISTA STANZE QUANDO SIAMO IN UNA PARTITA */
+#main_holder:not(:empty) ~ #game_list,
+#main:has(#main_holder:not(:empty)) #game_list {
+  display: none !important;
 }
 
 .gamelist_lobby {
@@ -214,135 +223,269 @@ body#gamebody {
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
-  border: 1px solid #e1e4e8 !important;
-  height: 190px !important;
+  border: 1px solid #d0d7de !important;
+  min-height: 200px !important;
+  height: auto !important;
 }
 
-/* --- 5. IL TAVOLO DELLA PARTITA (.game) --- */
+.gamelist_lobby h3 {
+  margin: 0 0 10px 0 !important;
+  font-size: 15px !important;
+  color: #1a1a1a !important;
+}
+
+.gamelist_lobby div {
+  font-size: 13px !important;
+  margin-bottom: 6px !important;
+  color: #444 !important;
+}
+
+.gamelist_lobby_right {
+  margin-top: 12px !important;
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.gamelist_lobby_right input[type="button"] {
+  flex: 1 !important;
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  border: 1px solid #d0d7de !important;
+  background: #f6f8fa !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+
+#main_holder {
+  width: 100% !important;
+  height: 100% !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+#main_holder:empty {
+  display: none !important;
+}
+
+/* --- 5. STRUTTURA PARTITA (.game) & BARRA STANZA (.game_top) --- */
 .game {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
 }
 
+/* Barra superiore della stanza: compatta e stilizzata */
 .game_top {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  background: #ffffff;
-  padding: 10px 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  height: 38px !important;
+  min-height: 38px !important;
+  max-height: 38px !important;
+  background: #ffffff !important;
+  border: 1px solid #d0d7de !important;
+  border-radius: 8px !important;
+  padding: 0 12px !important;
+  margin-bottom: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04) !important;
+  flex-shrink: 0 !important;
 }
 
-.game_top input[type="button"] {
-  background: #f5f5f5;
-  border: 1px solid #ccc;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
+.game_room_badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  color: #1976d2 !important;
+  background: #e3f2fd !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  white-space: nowrap !important;
 }
 
 .game_message {
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
-  margin-left: auto;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #333333 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  flex: 1 1 auto !important;
+  text-align: center !important;
 }
 
-/* Area di Gioco: Carta Nera a sinistra, Carte Bianche giocate al centro */
-.game_left_side {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+.game_top_actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
 }
 
-.confirm_card {
-  padding: 12px 24px;
-  background-color: #2e7d32;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(46,125,50,0.3);
-  transition: background 0.2s;
+/* Nasconde definitivamente il tasto Mostra/Nascondi Opzioni */
+.hide_setting_btn,
+.game_show_options {
+  display: none !important;
 }
 
-.confirm_card:hover {
-  background-color: #1b5e20;
+.game_top_actions .checkbox {
+  font-size: 12px !important;
+  color: #555 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  cursor: pointer !important;
 }
 
-.game_right_side {
-  flex: 1;
+.game_body_area {
+  flex: 1 1 auto !important;
+  height: calc(100% - 48px) !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
 }
 
-.game_right_side_cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-/* --- 6. LE OPZIONI DI GIOCO (.game_options) RESE MODALI CENTRATE --- */
+/* --- 6. LE OPZIONI DI GIOCO (.game_options) A TUTTO SCHERMO --- */
 .game_options {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: 90% !important;
-  max-width: 820px !important;
-  max-height: 85vh !important;
   background: #ffffff !important;
-  border-radius: 16px !important;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.35) !important;
-  padding: 24px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d0d7de !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+  padding: 16px 20px !important;
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.options_host_only {
+  display: inline-block !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #0969da !important;
+  background: #ddf4ff !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+}
+
+/* Elenco Mazzi Standard: prende tutto lo spazio rimanente in altezza e scorre internamente */
+.game_options .card_sets {
+  flex: 1 1 auto !important;
+  min-height: 80px !important;
   overflow-y: auto !important;
-  z-index: 1000 !important;
-  border: 1px solid #e0e0e0 !important;
+  border: 1px solid #e1e4e8 !important;
+  padding: 10px 14px !important;
+  border-radius: 8px !important;
+  background: #f6f8fa !important;
+  margin: 0 !important;
 }
 
-.game_options fieldset {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 14px;
-  margin-bottom: 14px;
+.game_options .base_card_sets,
+.game_options .extra_card_sets {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  gap: 6px 12px !important;
+  font-size: 12.5px !important;
 }
 
-.game_options select, .game_options input[type="text"] {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+/* --- 6.1 TAVOLO DI GIOCO DURANTE IL ROUND (.game_board & .game_hand) --- */
+.game_board {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 16px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding-bottom: 8px !important;
 }
 
-/* --- 7. LE CARTE (MATERIAL DESIGN) --- */
+.game_options:not(.hide) ~ .game_board,
+.game_options:not(.hide) ~ .game_hand {
+  display: none !important; /* Finché le opzioni sono visibili, non mostrare carte vuote */
+}
+
+.game_left_side, .game_right_side {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.game_white_cards, .game_last_round_cards {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 10px !important;
+  overflow-x: auto !important;
+}
+
+.game_hand {
+  height: 190px !important;
+  min-height: 190px !important;
+  max-height: 190px !important;
+  background: #ffffff !important;
+  border-radius: 10px !important;
+  border: 1px solid #d0d7de !important;
+  padding: 8px 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin-top: 8px !important;
+}
+
+.game_hand_cards {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 10px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  align-items: center !important;
+}
+
+/* Quando sei dentro una partita (#main_holder contiene la stanza),
+   nascondi le tab "Preferenze Utente" e "Filtri Mazzi Stanze" */
+#main_holder:not(:empty) ~ #bottom #tabs ul li:has(a[href="#tab-preferences"]),
+#main_holder:not(:empty) ~ #bottom #tabs ul li:has(a[href="#tab-gamelist-filters"]),
+body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-preferences"]),
+body:has(#main_holder:not(:empty)) #tabs ul li:has(a[href="#tab-gamelist-filters"]) {
+  display: none !important;
+}
+
+/* Stile per i tab della chat della stanza */
+#tabs div[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
+  display: block !important;
+  position: relative !important;
+  height: calc(100% - 38px) !important;
+  padding: 8px 12px 50px 12px !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+}
+
+/* --- 7. CARTE MATERIAL DESIGN --- */
 .card {
   width: 150px;
   min-width: 140px;
   height: 210px;
   border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   user-select: none;
   position: relative;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
 }
 
 .blackcard {
@@ -357,88 +500,35 @@ body#gamebody {
   border: 1px solid #e0e0e0 !important;
 }
 
-.card.selected {
-  outline: 3px solid #1976d2 !important;
-  box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.35), 0 12px 24px rgba(0,0,0,0.2) !important;
-  transform: translateY(-10px) !important;
-}
-
 .card_text {
   font-size: 14px;
   font-weight: 700;
   line-height: 1.35;
-  word-wrap: break-word;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 9px;
-  font-weight: 800;
-  opacity: 0.8;
-}
-
-/* --- 8. LA TUA MANO DI CARTE (.game_hand) CON SCROLL ORIZZONTALE --- */
-.game_hand {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 14px 16px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  margin-top: auto;
-}
-
-.your_hand {
-  display: block;
-  font-size: 14px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-.game_hand_cards {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 6px 2px 14px 2px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* --- 9. PANNELLO INFERIORE: GIOCATORI & SCHEDE DINAMICHE --- */
-
-/* REGOLA D'ORO PER JQUERY UI TABS:
-   Qualsiasi scheda inattiva DEVE essere nascosta, indipendentemente da altri display */
-#tabs .ui-tabs-hide,
-#tabs [aria-hidden="true"],
-#tabs div.hide {
-  display: none !important;
-}
-
+/* --- 8. BARRA INFERIORE: GIOCATORI (25%) & CHAT (75%) SEMPRE ANCORATI --- */
 #bottom {
-  /* Si ancora in basso, altezza minima confortevole ma si espande col contenuto */
-  min-height: 240px !important;
-  max-height: 42vh !important;
-  height: auto !important;
+  height: 220px !important;
+  min-height: 220px !important;
+  max-height: 220px !important;
+  flex: 0 0 220px !important; /* Impedisce che venga schiacciato o spinto via */
   background: #ffffff !important;
   border-top: 1px solid #d0d7de !important;
   display: flex !important;
   flex-direction: row !important;
-  flex-shrink: 0 !important;
-  z-index: 20 !important;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.04) !important;
+  z-index: 50 !important;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.06) !important;
+  overflow: hidden !important;
 }
 
-/* Area Giocatori / Scoreboard (25% a sinistra) */
+/* 25% Sinistra: Lista giocatori stanza */
 #info_area {
   width: 25% !important;
-  min-width: 200px !important;
-  border-right: 1px solid #e0e0e0 !important;
+  min-width: 220px !important;
+  max-width: 320px !important;
+  border-right: 1px solid #d0d7de !important;
   overflow-y: auto !important;
-  background: #fafafa !important;
+  background: #fafbfc !important;
   padding: 8px !important;
   box-sizing: border-box !important;
 }
@@ -457,19 +547,23 @@ body#gamebody {
   font-size: 13px !important;
 }
 
-/* Contenitore Schede (75% a destra) */
+/* 75% Destra: Tab Chat */
 #tabs {
   width: 75% !important;
-  flex: 1 !important;
+  flex: 1 1 auto !important;
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
-  border: none !important;
   position: relative !important;
   overflow: hidden !important;
 }
 
-/* Barra orizzontale dei tab in alto */
+#tabs .ui-tabs-hide,
+#tabs [aria-hidden="true"] {
+  display: none !important;
+}
+
+/* Intestazione tab */
 #tabs ul {
   display: flex !important;
   list-style: none !important;
@@ -495,12 +589,6 @@ body#gamebody {
   border: 1px solid transparent !important;
   border-bottom: none !important;
   border-radius: 6px 6px 0 0 !important;
-  transition: all 0.15s ease !important;
-}
-
-.tab-button:hover {
-  color: #1a1a1a !important;
-  background: #eaeef2 !important;
 }
 
 #tabs ul li.ui-tabs-active .tab-button {
@@ -511,184 +599,13 @@ body#gamebody {
   margin-bottom: -1px !important;
 }
 
-/* Pulsanti comuni Save, Revert */
-#tab-preferences input[type="button"],
-#tab-gamelist-filters input[type="button"] {
-  background: #f3f4f6 !important;
-  color: #1f2937 !important;
-  border: 1px solid #d1d5db !important;
-  padding: 6px 14px !important;
-  border-radius: 6px !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-  display: inline-block !important;
-  width: auto !important; /* Impedisce che il bottone si allarghi al 100% come nello screenshot! */
-  margin-right: 6px !important;
-}
-
-#tab-preferences input[type="button"]:hover,
-#tab-gamelist-filters input[type="button"]:hover {
-  background: #e5e7eb !important;
-  border-color: #9ca3af !important;
-}
-
-#tab-preferences input[value="Save"],
-#tab-gamelist-filters input[value="Save"] {
-  background: #1976d2 !important;
-  border-color: #1976d2 !important;
-  color: #ffffff !important;
-}
-
-#tab-preferences input[value="Save"]:hover,
-#tab-gamelist-filters input[value="Save"]:hover {
-  background: #1565c0 !important;
-}
-
-/* -------------------------------------------------------------
-   9.1 USER PREFERENCES (#tab-preferences)
-   ------------------------------------------------------------- */
-#tab-preferences:not(.ui-tabs-hide):not([aria-hidden="true"]) {
-  display: flex !important;
-  flex-direction: column !important;
-  height: calc(100% - 38px) !important;
-  overflow-y: auto !important;
-  padding: 14px 18px !important;
-  box-sizing: border-box !important;
-  background: #ffffff !important;
-  gap: 10px !important;
-}
-
-#tab-preferences .buttons_row {
-  display: flex !important;
-  gap: 8px !important;
-}
-
-#tab-preferences label {
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #374151 !important;
-  cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-}
-
-#tab-preferences input[type="checkbox"] {
-  accent-color: #1976d2 !important;
-  width: 16px !important;
-  height: 16px !important;
-  margin-right: 8px !important;
-  cursor: pointer !important;
-}
-
-#tab-preferences #ignore_list {
-  width: 100% !important;
-  max-width: 450px !important;
-  height: 75px !important;
-  border: 1px solid #d1d5db !important;
-  border-radius: 6px !important;
-  padding: 8px !important;
-  font-family: inherit !important;
-  font-size: 13px !important;
-  outline: none !important;
-  box-sizing: border-box !important;
-}
-
-#tab-preferences #ignore_list:focus {
-  border-color: #1976d2 !important;
-}
-
-/* -------------------------------------------------------------
-   9.2 GAME LIST FILTERS (#tab-gamelist-filters)
-   ------------------------------------------------------------- */
-#tab-gamelist-filters:not(.ui-tabs-hide):not([aria-hidden="true"]) {
-  display: block !important;
-  height: calc(100% - 38px) !important;
-  overflow-y: auto !important;
-  padding: 12px 18px !important;
-  box-sizing: border-box !important;
-  background: #ffffff !important;
-}
-
-#tab-gamelist-filters fieldset {
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  padding: 12px !important;
-  margin: 10px 0 0 0 !important;
-  background: #f9fafb !important;
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: space-between !important;
-  align-items: stretch !important;
-  gap: 16px !important;
-}
-
-#tab-gamelist-filters legend {
-  font-weight: 700 !important;
-  color: #1976d2 !important;
-  padding: 0 6px !important;
-  font-size: 12px !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-}
-
-.cardset_filter_list {
-  flex: 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  min-width: 0 !important;
-}
-
-.cardset_filter_list > span {
-  display: block !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  color: #4b5563 !important;
-  margin-bottom: 6px !important;
-  white-space: normal !important;
-  height: 32px !important; /* Allinea l'inizio dei select anche con label su 2 righe */
-}
-
-.cardset_filter_list select {
-  width: 100% !important;
-  height: 110px !important; /* Dimensione sufficiente per leggere comodamente i set */
-  border: 1px solid #d1d5db !important;
-  border-radius: 6px !important;
-  padding: 6px !important;
-  font-size: 12px !important;
-  background: #ffffff !important;
-  outline: none !important;
-  box-sizing: border-box !important;
-}
-
-.cardset_filter_list select:focus {
-  border-color: #1976d2 !important;
-}
-
-.cardset_filter_list .buttons {
-  display: flex !important;
-  gap: 6px !important;
-  margin-top: 8px !important;
-}
-
-.cardset_filter_list .buttons input[type="button"] {
-  flex: 1 !important;
-  padding: 5px 8px !important;
-  font-size: 11.5px !important;
-  text-align: center !important;
-}
-
-/* -------------------------------------------------------------
-   9.3 CHAT GLOBALE E STANZE (#tab-global)
-   ------------------------------------------------------------- */
+/* Finestra messaggi chat attiva */
 #tab-global:not(.ui-tabs-hide):not([aria-hidden="true"]),
-[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
+div[id^="tab-game-"]:not(.ui-tabs-hide):not([aria-hidden="true"]) {
   display: block !important;
   position: relative !important;
-  height: 200px !important;
-  min-height: 200px !important;
-  padding: 10px 14px 52px 14px !important;
+  height: calc(100% - 38px) !important;
+  padding: 8px 12px 50px 12px !important;
   box-sizing: border-box !important;
   background: #ffffff !important;
 }
@@ -699,84 +616,50 @@ body#gamebody {
   background: #fafbfc !important;
   padding: 8px 12px !important;
   font-size: 13px !important;
-  line-height: 1.45 !important;
   border: 1px solid #e1e4e8 !important;
   border-radius: 6px !important;
-  margin: 0 !important;
-  box-sizing: border-box !important;
 }
 
-#tab-global .chat, [id^="tab-game-"] .chat {
+/* Riga input e invio chat sempre fissa sul fondo */
+#tabs .chat {
   position: absolute !important;
-  left: 14px !important;
-  bottom: 10px !important;
-  right: 105px !important;
-  width: auto !important;
+  left: 12px !important;
+  bottom: 8px !important;
+  right: 90px !important;
   height: 34px !important;
-  padding: 6px 12px !important;
+  padding: 0 12px !important;
   border: 1px solid #d0d7de !important;
   border-radius: 6px !important;
   font-size: 13px !important;
-  outline: none !important;
-  box-sizing: border-box !important;
   background: #ffffff !important;
 }
 
-#tab-global .chat:focus, [id^="tab-game-"] .chat:focus {
+#tabs .chat:focus {
   border-color: #1976d2 !important;
 }
 
-#tab-global .chat_submit, [id^="tab-game-"] .chat_submit {
+#tabs .chat_submit {
   position: absolute !important;
-  right: 14px !important;
-  bottom: 10px !important;
-  width: 80px !important;
+  right: 12px !important;
+  bottom: 8px !important;
+  width: 70px !important;
   height: 34px !important;
   background: #1976d2 !important;
-  color: white !important;
+  color: #fff !important;
   border: none !important;
   border-radius: 6px !important;
-  font-weight: bold !important;
-  font-size: 13px !important;
+  font-weight: 600 !important;
   cursor: pointer !important;
-  box-sizing: border-box !important;
 }
 
-#tab-global .chat_submit:hover, [id^="tab-game-"] .chat_submit:hover {
+#tabs .chat_submit:hover {
   background: #1565c0 !important;
 }
 
-/* --- 10. RESPONSIVE MOBILE (@media max-width: 768px) --- */
-@media (max-width: 768px) {
-  #menubar {
-    padding: 8px 12px;
-  }
-  
-  #bottom {
-    height: 260px;
-    flex-direction: column;
-  }
-
-  #info_area {
-    width: 100%;
-    height: 70px;
-    border-right: none;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-  .scorecard {
-    display: inline-flex;
-    margin-right: 8px;
-  }
-
-  .card {
-    width: 125px;
-    min-width: 115px;
-    height: 175px;
-    padding: 10px;
-  }
-
-  .card_text {
-    font-size: 12px;
-  }
+/* Preferenze e filtri */
+#tab-preferences, #tab-gamelist-filters {
+  height: calc(100% - 38px) !important;
+  overflow-y: auto !important;
+  padding: 12px 18px !important;
+  background: #ffffff !important;
 }

@@ -773,7 +773,7 @@ cah.Game.prototype.insertIntoDocument = function() {
   var linkToChatArea = $("<a>");
   this.gameChatTab_ = $("<li>");
   linkToChatArea.attr("href", "#" + this.chatElement_.id);
-  linkToChatArea.text("Chat with game members");
+  linkToChatArea.text("Chat Con Membri Della Stanza");
   linkToChatArea.addClass("tab-button");
   this.gameChatTab_.append(linkToChatArea);
   $("#tabs ul").append(this.gameChatTab_);

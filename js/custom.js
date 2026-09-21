@@ -85,4 +85,14 @@ $(document).ready(function() {
     $list.append($li);
     $status.css("color", "#2e7d32").text("Mazzo '" + name + "' aggiunto con successo!");
   }
+
+  // Aggiorna dinamicamente il nome della stanza nell'header della partita
+  const observer = new MutationObserver(() => {
+    const activeTab = document.querySelector("#tabs ul li.ui-tabs-active a");
+    const roomNameEl = document.querySelector(".game_room_name");
+    if (activeTab && roomNameEl && activeTab.textContent.trim() !== "Chat Globale") {
+      roomNameEl.textContent = activeTab.textContent.trim();
+    }
+  });
+  observer.observe(document.querySelector("#tabs ul"), { childList: true, subtree: true, attributes: true });
 });

@@ -275,16 +275,31 @@
 <div style="width: 100%; max-width: 1200px; position: relative;" class="hide">
   <div id="game_template" class="game">
     <div class="game_top">
-      <input type="button" class="game_show_last_round game_menu_bar" value="Mostra Ultimo Round"
-          disabled="disabled" />
-      <input type="button" class="game_show_options game_menu_bar" value="Nascondi Opzioni" />
-      <label class="game_menu_bar checkbox"><input type="checkbox" class="game_animate_cards" checked="checked" /><span> Anima Carte</span></label>
+      <div class="game_room_badge">
+        <span class="game_room_icon">🎮</span>
+        <span class="game_room_name">Stanza di Gioco</span>
+      </div>
       <div class="game_message" role="status">
         In attesa del server...
       </div>
+      <div class="game_top_actions">
+        <input type="button" class="game_show_last_round game_menu_bar" value="Ultimo Round" disabled="disabled" />
+        <label class="game_menu_bar checkbox">
+          <input type="checkbox" class="game_animate_cards" checked="checked" />
+          <span>Anima Carte</span>
+        </label>
+        <!-- game_show_options mantenuto nel DOM per evitare crash JS ma nascosto con .hide_setting_btn -->
+        <input type="button" class="game_show_options game_menu_bar hide_setting_btn" value="Opzioni" />
+      </div>
     </div>
-    <div style="width:100%; min-height: 480px;">
-      <div style="width:100%; height:100%;">
+    
+    <div class="game_body_area">
+      <!-- Opzioni Partita pre-inizio (occupano tutto lo spazio fino all'avvio) -->
+      <div class="game_options">
+      </div>
+
+      <!-- Tavolo di gioco (attivo durante la partita) -->
+      <div class="game_board">
         <div class="game_left_side">
           <div class="game_black_card_wrapper">
             <span tabindex="0">La carta nera per
@@ -294,8 +309,6 @@
             </div>
           </div>
           <input type="button" class="confirm_card" value="Conferma Selezione" />
-        </div>
-        <div class="game_options">
         </div>
         <div class="game_right_side hide">
           <div class="game_right_side_box game_white_card_wrapper">
@@ -310,6 +323,8 @@
           </div>
         </div>
       </div>
+      
+      <!-- Mano di carte del giocatore in basso -->
       <div class="game_hand">
         <div class="game_hand_filter hide">
           <span class="game_hand_filter_text"></span>
@@ -357,110 +372,120 @@
 <!-- Template for game options. -->
 <div class="hide">
   <div class="game_options" id="game_options_template">
-    <span class="options_host_only">Solo l'host della partita può modificare le opzioni.</span>
-    <br/><br/>
-    <fieldset>
-      <legend>Opzioni partita:</legend>
-      <label id="score_limit_template_label" for="score_limit_template">Punti per vincere:</label>
-      <select id="score_limit_template" class="score_limit">
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8" selected="selected">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="15">15</option>
-      </select>
-      <br/>
-      <label id="player_limit_template_label" for="player_limit_template">Limite giocatori:</label>
-      <select id="player_limit_template" class="player_limit"
-          aria-label="Limite giocatori. Più di 10 giocatori potrebbero causare problemi grafici o di lettura.">
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10" selected="selected">10</option>
-        <option value="12">12</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-      </select>
-      (Più di 10 giocatori potrebbero rendere il tavolo affollato!)
-      <br/>
-      <label id="spectator_limit_template_label" for="spectator_limit_template">Limite spettatori:</label>
-      <select id="spectator_limit_template" class="spectator_limit"
-          aria-label="Limite spettatori.">
-        <option value="0">0</option>
-        <option value="5">5</option>
-        <option value="10" selected="selected">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-      </select>
-      Gli spettatori possono guardare e chattare, ma non giocare le carte.
-      <br/>
-      <label id="timer_multiplier_template_label" for="timer_multiplier_template"
-          title="I giocatori inattivi verranno saltati se non giocano entro il tempo limite stabilito.">
-          Moltiplicatore tempo timer:
+    
+    <!-- Intestazione: Titolo Opzioni + Targhetta Host -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+      <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #1a1a1a;">Opzioni partita</h3>
+      <span class="options_host_only" style="margin: 0;">Solo l'host della partita può modificare le opzioni.</span>
+    </div>
+
+    <!-- 1. Password partita -->
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; padding: 8px 12px; background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px;">
+      <label id="game_password_template_label" for="game_password_template" style="font-weight: 600; font-size: 13px;">
+        Password partita (opzionale):
       </label>
-      <select id="timer_multiplier_template" class="timer_multiplier">
-      	<option value="0.25x">0.25x</option>
-      	<option value="0.5x">0.5x</option>
-      	<option value="0.75x">0.75x</option>
-      	<option selected="selected" value="1x">1x</option>
-      	<option value="1.25x">1.25x</option>
-      	<option value="1.5x">1.5x</option>
-      	<option value="1.75x">1.75x</option>
-      	<option value="2x">2x</option>
-      	<option value="2.5x">2.5x</option>
-      	<option value="3x">3x</option>
-      	<option value="4x">4x</option>
-      	<option value="5x">5x</option>
-      	<option value="10x">10x</option>
-      	<option value="Unlimited">Illimitato</option>
-      </select>
-      <br/>
-      
-      <!-- Mazzi Personalizzati Cardcast -->
-      <fieldset class="cardcast_custom_sets" style="margin: 12px 0; padding: 12px; border: 2px solid #2196F3; border-radius: 8px; background: #f8fbff;">
-        <legend style="font-weight: bold; color: #1976D2;">🃏 Mazzi Personalizzati (cast.clrtd.com)</legend>
-        <p style="margin: 0 0 8px 0; font-size: 13px; color: #333;">
-          Inserisci il codice del mazzo creato su <a href="https://cast.clrtd.com" target="_blank" style="color: #1976D2; font-weight: bold;">cast.clrtd.com</a>:
-        </p>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <input type="text" id="custom_cardcast_code" class="custom_cardcast_code" placeholder="Es. HVHST" maxlength="10" 
-                 style="text-transform: uppercase; font-weight: bold; width: 130px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px;" />
-          <input type="button" id="custom_cardcast_btn" class="custom_cardcast_btn" value="Aggiungi Mazzo" 
-                 style="padding: 6px 14px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;" />
-        </div>
-        <div id="custom_cardcast_status" class="custom_cardcast_status" style="margin-top: 6px; font-size: 13px; font-weight: 500;"></div>
-        
-        <!-- Lista dei mazzi caricati -->
-        <div id="custom_cardcast_list_container" class="custom_cardcast_list_container" style="margin-top: 10px; display: none;">
-          <strong style="font-size: 13px; color: #333;">Mazzi attivi in questa partita:</strong>
-          <ul id="custom_cardcast_list" class="custom_cardcast_list" style="margin: 6px 0 0 0; padding-left: 20px; font-size: 13px; color: #444;"></ul>
-        </div>
-      </fieldset>
-
-      <!-- Sezione Mazzi Standard -->
-      <fieldset class="card_sets">
-        <legend>Mazzi di Carte Standard</legend>
-        <span class="base_card_sets"></span>
-        <span class="extra_card_sets"></span>
-      </fieldset>
-
-      <br/>
-      <label id="game_password_template_label" for="game_password_template">Password partita (opzionale):</label>
-      <input type="text" id="game_password_template" class="game_password" />
+      <input type="text" id="game_password_template" class="game_password" placeholder="Nessuna password" 
+             style="width: 180px; margin: 0; padding: 5px 10px; border: 1px solid #d0d7de; border-radius: 6px; background: #fff;" />
       <input type="password" id="game_fake_password_template" class="game_fake_password hide" />
-      <input type="checkbox" id="game_hide_password_template" class="game_hide_password" />
-      <label id="game_hide_password_template_label" for="game_hide_password_template">
-        Nascondi password.
+      <label id="game_hide_password_template_label" for="game_hide_password_template" 
+             style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #555; cursor: pointer;">
+        <input type="checkbox" id="game_hide_password_template" class="game_hide_password" style="margin: 0;" />
+        Nascondi password
       </label>
+    </div>
+
+    <!-- 2. Parametri principali compatti su riga orizzontale -->
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; padding: 8px 12px; background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px;">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <label id="score_limit_template_label" for="score_limit_template" style="font-size: 13px; font-weight: 600;">Punti vittoria:</label>
+        <select id="score_limit_template" class="score_limit" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8" selected="selected">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="15">15</option>
+        </select>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <label id="player_limit_template_label" for="player_limit_template" style="font-size: 13px; font-weight: 600;">Limite giocatori:</label>
+        <select id="player_limit_template" class="player_limit" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10" selected="selected">10</option>
+          <option value="12">12</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <label id="spectator_limit_template_label" for="spectator_limit_template" style="font-size: 13px; font-weight: 600;">Spettatori:</label>
+        <select id="spectator_limit_template" class="spectator_limit" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+          <option value="0">0</option>
+          <option value="5">5</option>
+          <option value="10" selected="selected">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <label id="timer_multiplier_template_label" for="timer_multiplier_template" style="font-size: 13px; font-weight: 600;">Timer:</label>
+        <select id="timer_multiplier_template" class="timer_multiplier" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+          <option value="0.25x">0.25x</option>
+          <option value="0.5x">0.5x</option>
+          <option value="0.75x">0.75x</option>
+          <option selected="selected" value="1x">1x</option>
+          <option value="1.25x">1.25x</option>
+          <option value="1.5x">1.5x</option>
+          <option value="1.75x">1.75x</option>
+          <option value="2x">2x</option>
+          <option value="2.5x">2.5x</option>
+          <option value="3x">3x</option>
+          <option value="4x">4x</option>
+          <option value="5x">5x</option>
+          <option value="10x">10x</option>
+          <option value="Unlimited">Illimitato</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- 3. Mazzi Personalizzati Cardcast -->
+    <fieldset class="cardcast_custom_sets" style="margin: 0 0 12px 0; padding: 10px 14px; border: 2px solid #2196F3; border-radius: 8px; background: #f8fbff; flex-shrink: 0;">
+      <legend style="font-weight: bold; color: #1976D2;">🃏 Mazzi Personalizzati (cast.clrtd.com)</legend>
+      <p style="margin: 0 0 8px 0; font-size: 13px; color: #333;">
+        Inserisci il codice del mazzo creato su <a href="https://cast.clrtd.com" target="_blank" style="color: #1976D2; font-weight: bold;">cast.clrtd.com</a>:
+      </p>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <input type="text" id="custom_cardcast_code" class="custom_cardcast_code" placeholder="Es. HVHST" maxlength="10" 
+               style="text-transform: uppercase; font-weight: bold; width: 130px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff;" />
+        <input type="button" id="custom_cardcast_btn" class="custom_cardcast_btn" value="Aggiungi Mazzo" 
+               style="padding: 6px 14px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;" />
+      </div>
+      <div id="custom_cardcast_status" class="custom_cardcast_status" style="margin-top: 6px; font-size: 13px; font-weight: 500;"></div>
+      
+      <div id="custom_cardcast_list_container" class="custom_cardcast_list_container" style="margin-top: 8px; display: none;">
+        <strong style="font-size: 13px; color: #333;">Mazzi attivi in questa partita:</strong>
+        <ul id="custom_cardcast_list" class="custom_cardcast_list" style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; color: #444;"></ul>
+      </div>
+    </fieldset>
+
+    <!-- 4. Sezione Mazzi Standard (si espande fino in fondo) -->
+    <fieldset class="card_sets">
+      <legend style="font-weight: 700; color: #24292f;">Mazzi di Carte Standard</legend>
+      <span class="base_card_sets"></span>
+      <span class="extra_card_sets"></span>
     </fieldset>
   </div>
 </div>
