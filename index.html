@@ -26,6 +26,7 @@
 <script type="text/javascript" src="js/cah.ajax.builder.js"></script>
 <script type="text/javascript" src="js/cah.ajax.handlers.js"></script>
 <script type="text/javascript" src="js/cah.app.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
 <link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
 <jsp:include page="analytics.jsp" />
@@ -35,8 +36,6 @@
 <div id="welcome">
   <div id="tweetbox">
     <h3>Recent tweets (mainly server status updates)</h3>
-    <a class="twitter-timeline" data-height="500" data-dnt="true" data-theme="light"
-    href="https://twitter.com/_PYX_?ref_src=twsrc%5Etfw">Tweets by _PYX_</a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div>
   <h1 tabindex="0">
@@ -203,7 +202,7 @@
 <div class="hide">
 	<div id="gamelist_lobby_template" class="gamelist_lobby" tabindex="0">
 	<div class="gamelist_lobby_left">
-	    	<h3>
+	  <h3>
 			<span class="gamelist_lobby_host">host</span>'s Game
 			(<span class="gamelist_lobby_player_count"></span>/<span class="gamelist_lobby_max_players"></span>,
 			<span class="gamelist_lobby_spectator_count"></span>/<span class="gamelist_lobby_max_spectators"></span>)
@@ -283,8 +282,7 @@
 </div>
 
 <!-- Template for game lobbies. We have a holder here for designing only. -->
-<div style="width: 1000px; height: 506px; border: 1px solid black; position: relative;"
-    class="hide">
+<div style="width: 100%; max-width: 1200px; position: relative;" class="hide">
   <div id="game_template" class="game">
     <div class="game_top">
       <input type="button" class="game_show_last_round game_menu_bar" value="Show Last Round"
@@ -295,7 +293,7 @@
         Waiting for server...
       </div>
     </div>
-    <div style="width:100%; height:472px;">
+    <div style="width:100%; min-height: 480px;">
       <div style="width:100%; height:100%;">
         <div class="game_left_side">
           <div class="game_black_card_wrapper">
@@ -375,42 +373,51 @@
       <legend>Game options:</legend>
       <label id="score_limit_template_label" for="score_limit_template">Score limit:</label>
       <select id="score_limit_template" class="score_limit">
-        <%
-          for (int i = injector.getInstance(Key.get(Integer.class, MinScoreLimit.class)); i <= injector.getInstance(Key.get(Integer.class, MaxScoreLimit.class)); i++) {
-        %>
-          <option <%=(i == injector.getInstance(Key.get(Integer.class, DefaultScoreLimit.class))) ? "selected='selected' " : "" %>value="<%= i %>"><%= i %></option>
-        <% } %>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8" selected="selected">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="15">15</option>
       </select>
       <br/>
       <label id="player_limit_template_label" for="player_limit_template">Player limit:</label>
       <select id="player_limit_template" class="player_limit"
           aria-label="Player limit. Having more than 10 players may cause issues both for screen readers and traditional browsers.">
-        <%
-          for (int i = injector.getInstance(Key.get(Integer.class, MinPlayerLimit.class)); i <= injector.getInstance(Key.get(Integer.class, MaxPlayerLimit.class)); i++) {
-        %>
-          <option <%= i == injector.getInstance(Key.get(Integer.class, DefaultPlayerLimit.class)) ? "selected='selected' " : "" %>value="<%= i %>"><%= i %></option>
-        <% } %>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10" selected="selected">10</option>
+        <option value="12">12</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
       </select>
       Having more than 10 players may get cramped!
       <br/>
       <label id="spectator_limit_template_label" for="spectator_limit_template">Spectator limit:</label>
       <select id="spectator_limit_template" class="spectator_limit"
           aria-label="Spectator limit.">
-        <%
-          for (int i = injector.getInstance(Key.get(Integer.class, MinSpectatorLimit.class)); i <= injector.getInstance(Key.get(Integer.class, MaxSpectatorLimit.class)); i++) {
-        %>
-          <option <%= i == injector.getInstance(Key.get(Integer.class, DefaultSpectatorLimit.class)) ? "selected='selected' " : "" %>value="<%= i %>"><%= i %></option>
-        <% } %>
+        <option value="0">0</option>
+        <option value="5">5</option>
+        <option value="10" selected="selected">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
       </select>
       Spectators can watch and chat, but not actually play. Not even as Czar.
       <br/>
       <label id="timer_multiplier_template_label" for="timer_multiplier_template"
-          title="Players will be skipped if they have not played within a reasonable amount of time. This is the multiplier to apply to the default timeouts, or Unlimited to disable timeouts.">
+          title="Players will be skipped if they have not played within a reasonable amount of time.">
           Idle timer multiplier:
       </label>
-      <select id="timer_multiplier_template" class="timer_multiplier"
-          title="Players will be skipped if they have not played within a reasonable amount of time. This is the multiplier to apply to the default timeouts, or Unlimited to disable timeouts."
-          aria-label="Players will be skipped if they have not played within a reasonable amount of time. This is the multiplier to apply to the default timeouts, or Unlimited to disable timeouts.">
+      <select id="timer_multiplier_template" class="timer_multiplier">
       	<option value="0.25x">0.25x</option>
       	<option value="0.5x">0.5x</option>
       	<option value="0.75x">0.75x</option>
@@ -427,38 +434,39 @@
       	<option value="Unlimited">Unlimited</option>
       </select>
       <br/>
+      
+      <!-- Sezione Mazzi Standard -->
       <fieldset class="card_sets">
         <legend>Card Sets</legend>
         <span class="base_card_sets"></span>
         <span class="extra_card_sets"></span>
       </fieldset>
-      <% if (allowBlankCards) { %>
-        <br/>
-        <label id="blanks_limit_label" title="Blank cards allow a player to type in their own answer.">
-          Also include <select id="blanks_limit_template" class="blanks_limit">
-          <%
-            for (int i = injector.getInstance(Key.get(Integer.class, MinBlankCardLimit.class)); i <= injector.getInstance(Key.get(Integer.class, MaxBlankCardLimit.class)); i++) {
-          %>
-            <option <%= i == injector.getInstance(Key.get(Integer.class, DefaultBlankCardLimit.class)) ? "selected='selected' " : "" %>value="<%= i %>"><%= i %></option>
-          <% } %>
-          </select> blank white cards.
-        </label>
-      <% } %>
+
+      <!-- NOSTRA NUOVA SEZIONE: Mazzi Personalizzati Cardcast -->
+      <fieldset class="cardcast_custom_sets" style="margin-top: 10px; padding: 10px; border-radius: 6px;">
+        <legend>Mazzi Personalizzati (cast.clrtd.com)</legend>
+        <p style="margin: 0 0 8px 0; font-size: 13px;">
+          Crea il tuo mazzo su <a href="https://cast.clrtd.com" target="_blank" style="font-weight: bold;">cast.clrtd.com</a> e inserisci qui il codice:
+        </p>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="text" id="custom_cardcast_code" placeholder="Es. HVHST" maxlength="10" style="text-transform: uppercase; font-weight: bold; width: 120px;" />
+          <input type="button" id="custom_cardcast_btn" value="Aggiungi Mazzo" />
+        </div>
+        <div id="custom_cardcast_status" style="margin-top: 6px; font-size: 12px;"></div>
+      </fieldset>
+
       <br/>
       <label id="game_password_template_label" for="game_password_template">Game password:</label>
-      <input type="text" id="game_password_template" class="game_password"
-          aria-label="Game password. You must tab outside of the box to apply the password."/>
+      <input type="text" id="game_password_template" class="game_password" />
       <input type="password" id="game_fake_password_template" class="game_fake_password hide" />
-      You must click outside the box to apply the password.
       <input type="checkbox" id="game_hide_password_template" class="game_hide_password" />
-      <label id="game_hide_password_template_label" for="game_hide_password_template"
-          aria-label="Hide password from your screen."
-          title="Hides the password from your screen, so people watching your stream can't see it.">
+      <label id="game_hide_password_template_label" for="game_hide_password_template">
         Hide password.
       </label>
     </fieldset>
   </div>
 </div>
+
 <div style="position:absolute; left:-99999px" role="alert" id="aria-notifications"></div>
 </body>
 </html>
