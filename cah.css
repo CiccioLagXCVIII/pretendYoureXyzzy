@@ -327,6 +327,11 @@ body:has(#main_holder:not(:empty)) #canvas {
   display: none !important;
 }
 
+/* Nasconde definitivamente il tasto Mostra/Nascondi Opzioni */
+.hide_setting_btn,
+.game_show_options {
+  display: none !important;
+}
 
 /* AA. STRUTTURA PARTITA (.game) & BARRA STANZA (.game_top) */
 
@@ -343,14 +348,14 @@ body:has(#main_holder:not(:empty)) #canvas {
 
 /* BB. Barra superiore della stanza (.game_top) */
 .game_top {
-  height: 38px !important;
-  min-height: 38px !important;
-  max-height: 38px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  max-height: 42px !important;
   background: #ffffff !important;
   border: 1px solid #d0d7de !important;
   border-radius: 8px !important;
-  padding: 0 12px !important;
-  margin-bottom: 10px !important;
+  padding: 0 14px !important;
+  margin-bottom: 8px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -373,16 +378,21 @@ body:has(#main_holder:not(:empty)) #canvas {
   white-space: nowrap !important;
 }
 
-/* CC. Messaggi di stato */
+/* CC. Messaggio di stato partita (pill centrale moderna) */
 .game_message {
   font-size: 13px !important;
-  font-weight: 600 !important;
-  color: #333333 !important;
+  font-weight: 700 !important;
+  color: #0d47a1 !important;
+  background: #e8f0fe !important;
+  padding: 4px 16px !important;
+  border-radius: 20px !important;
+  border: 1px solid #c2e7ff !important;
+  text-align: center !important;
+  white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  flex: 1 1 auto !important;
-  text-align: center !important;
+  max-width: fit-content !important;
+  margin: 0 auto !important;
 }
 
 /* CC. Azioni barra stanza e toggle */
@@ -393,7 +403,22 @@ body:has(#main_holder:not(:empty)) #canvas {
   white-space: nowrap !important;
 }
 
-/* Nasconde definitivamente il tasto Mostra/Nascondi Opzioni */
+.game_top_actions input[type="button"] {
+  height: 28px !important;
+  padding: 0 10px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  border: 1px solid #d0d7de !important;
+  background: #f6f8fa !important;
+  cursor: pointer !important;
+}
+
+.game_top_actions input[type="button"]:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
 .hide_setting_btn,
 .game_show_options {
   display: none !important;
@@ -404,24 +429,24 @@ body:has(#main_holder:not(:empty)) #canvas {
   color: #555 !important;
   display: flex !important;
   align-items: center !important;
-  gap: 4px !important;
+  gap: 5px !important;
   cursor: pointer !important;
+  font-weight: 500 !important;
 }
 
 /* BB. Area corpo partita (.game_body_area) */
 .game_body_area {
   flex: 1 1 auto !important;
-  height: calc(100% - 48px) !important;
   min-height: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
+  gap: 8px !important;
 }
 
 
 /* AA. LE OPZIONI DI GIOCO (.game_options) */
 
-/* BB. Contenitore opzioni e avvisi host */
 /* BB. Contenitore opzioni e avvisi host */
 .game_options {
   background: #ffffff !important;
@@ -432,7 +457,7 @@ body:has(#main_holder:not(:empty)) #canvas {
   flex: 1 1 auto !important;
   height: 100% !important;
   min-height: 0 !important;
-  display: flex; /* Rimosso !important per consentire a .hide di nasconderlo */
+  display: flex; /* Senza !important per consentire a .hide di nasconderlo */
   flex-direction: column !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
@@ -499,7 +524,7 @@ body:has(#main_holder:not(:empty)) #canvas {
   box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15) !important;
 }
 
-/* Pulsante icona occhio dentro il campo */
+/* CC. Pulsante icona occhio dentro il campo */
 .game_toggle_password {
   position: absolute !important;
   right: 6px !important;
@@ -524,7 +549,6 @@ body:has(#main_holder:not(:empty)) #canvas {
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Gestione alternanza occhio aperto / occhio barrato */
 .game_toggle_password .eye_closed {
   display: none !important;
 }
@@ -557,53 +581,173 @@ body:has(#main_holder:not(:empty)) #canvas {
 }
 
 
-/* AA. TAVOLO DI GIOCO DURANTE IL ROUND */
+/* AA. TAVOLO DA GIOCO (.game_board) */
 
-/* BB. Tavolo da gioco (.game_board) */
+/* BB. Layout orizzontale tavolo */
 .game_board {
   flex: 1 1 auto !important;
   min-height: 0 !important;
   display: flex !important;
   flex-direction: row !important;
   gap: 16px !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  padding-bottom: 8px !important;
+  overflow: hidden !important;
 }
 
+/* Finché le opzioni sono visibili, non mostrare carte vuote */
 .game_options:not(.hide) ~ .game_board,
 .game_options:not(.hide) ~ .game_hand {
-  display: none !important; /* Finché le opzioni sono visibili, non mostrare carte vuote */
+  display: none !important;
 }
 
-/* CC. Colonne carte nere e carte giocate */
-.game_left_side, .game_right_side {
+/* BB. Colonna Sinistra: Carta Nera & Conferma */
+.game_left_side {
   display: flex !important;
   flex-direction: column !important;
+  width: 170px !important;
+  min-width: 170px !important;
+  flex-shrink: 0 !important;
   gap: 8px !important;
+  background: #ffffff !important;
+  padding: 10px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d0d7de !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+  box-sizing: border-box !important;
 }
 
-.game_white_cards, .game_last_round_cards {
+.game_black_card_wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  align-items: center !important;
+}
+
+.game_black_card_wrapper > span {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  color: #57606a !important;
+  text-align: center !important;
+}
+
+.game_black_card {
+  width: 150px !important;
+  height: 210px !important;
+}
+
+/* CC. Pulsante Conferma Selezione Material Design */
+.confirm_card {
+  width: 100% !important;
+  height: 38px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  background: #2e7d32 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 5px rgba(46, 125, 50, 0.3) !important;
+}
+
+.confirm_card:hover:not(:disabled) {
+  background: #1b5e20 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(46, 125, 50, 0.4) !important;
+}
+
+.confirm_card:disabled {
+  background: #e0e0e0 !important;
+  color: #8c8c8c !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* BB. Colonna Destra: Tavolo Carte Giocate */
+.game_right_side {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #ffffff !important;
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d0d7de !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+  box-sizing: border-box !important;
+}
+
+.game_white_card_wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.game_white_card_wrapper > span,
+.game_last_round > span {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  color: #57606a !important;
+  margin-bottom: 8px !important;
+}
+
+/* CC. Tappeto carte giocate (area con bordo tratteggiato elegante) */
+.game_white_cards,
+.game_last_round_cards {
+  flex: 1 1 auto !important;
+  min-height: 215px !important;
+  background: #f8fafc !important;
+  border: 2px dashed #cbd5e1 !important;
+  border-radius: 10px !important;
+  padding: 10px !important;
   display: flex !important;
   flex-direction: row !important;
-  gap: 10px !important;
+  gap: 12px !important;
   overflow-x: auto !important;
+  overflow-y: hidden !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
 }
 
-/* BB. Mano di carte del giocatore (.game_hand) */
+
+/* AA. MANO DI CARTE DEL GIOCATORE (.game_hand) */
+
+/* BB. Box contenitore della mano */
 .game_hand {
-  height: 190px !important;
-  min-height: 190px !important;
-  max-height: 190px !important;
+  height: 235px !important;
+  min-height: 235px !important;
+  max-height: 235px !important;
   background: #ffffff !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   border: 1px solid #d0d7de !important;
-  padding: 8px 12px !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+  padding: 8px 14px 10px 14px !important;
   display: flex !important;
   flex-direction: column !important;
-  margin-top: 8px !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+  position: relative !important;
 }
 
+/* CC. Etichetta intestazione mano */
+.your_hand {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  color: #1976d2 !important;
+  margin-bottom: 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+/* CC. Cestino orizzontale delle carte */
 .game_hand_cards {
   flex: 1 1 auto !important;
   display: flex !important;
@@ -612,48 +756,141 @@ body:has(#main_holder:not(:empty)) #canvas {
   overflow-x: auto !important;
   overflow-y: hidden !important;
   align-items: center !important;
+  padding: 6px 4px 8px 4px !important;
+  scrollbar-width: thin !important;
+}
+
+/* CC. Override zoom e proporzioni reali carte (.card_holder) */
+.game_hand_cards .card_holder {
+  width: 132px !important;
+  min-width: 132px !important;
+  max-width: 132px !important;
+  height: 184px !important;
+  min-height: 184px !important;
+  max-height: 184px !important;
+  transform: none !important; /* Disattiva il rimpicciolimento di QTransform */
+  margin: 0 !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+}
+
+.game_hand_cards .card {
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
+}
+
+/* CC. Effetti hover e selezione carta */
+.game_hand_cards .card:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.18) !important;
+}
+
+.game_hand_cards .card.selected,
+.card.selected {
+  border: 2px solid #1976d2 !important;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.25), 0 8px 18px rgba(0,0,0,0.15) !important;
+  transform: translateY(-10px) !important;
+}
+
+/* CC. Filtro Czar durante il turno da giudice */
+.game_hand_filter {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(3px) !important;
+  z-index: 50 !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.game_hand_filter_text {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  background: #ffffff !important;
+  padding: 10px 22px !important;
+  border-radius: 24px !important;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1) !important;
+  border: 1px solid #d0d7de !important;
 }
 
 
-/* AA. CARTE MATERIAL DESIGN */
+/* AA. CARTE MATERIAL DESIGN (.card, .blackcard, .whitecard) */
 
 /* BB. Struttura base carta (.card) */
 .card {
-  width: 150px;
-  min-width: 140px;
-  height: 210px;
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  user-select: none;
-  position: relative;
+  width: 145px;
+  height: 205px;
+  border-radius: 12px !important;
+  padding: 14px !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  position: relative !important;
+  box-sizing: border-box !important;
 }
 
 /* BB. Carta Nera (.blackcard) */
 .blackcard {
   background-color: #121212 !important;
   color: #ffffff !important;
-  border: 1px solid #222 !important;
+  border: 1px solid #2a2a2a !important;
 }
 
 /* BB. Carta Bianca (.whitecard) */
 .whitecard {
   background-color: #ffffff !important;
   color: #111111 !important;
-  border: 1px solid #e0e0e0 !important;
+  border: 1px solid #dcdcdc !important;
 }
 
-/* BB. Testo della carta */
-.card_text {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.35;
+/* CC. Tipografia e dettagli carta */
+.blackcard .card_text {
+  color: #ffffff !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
 }
 
+.whitecard .card_text {
+  color: #1a1a1a !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+}
+
+/* CC. Logo e metadati carta */
+.card .logo {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-top: 6px !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  opacity: 0.65 !important;
+}
+
+.card .logo_text {
+  font-size: 8.5px !important;
+}
+
+.card .card_metadata {
+  display: flex !important;
+  gap: 6px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
 
 /* AA. BARRA INFERIORE & TABS */
 
