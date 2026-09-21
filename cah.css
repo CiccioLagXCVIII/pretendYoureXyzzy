@@ -795,6 +795,7 @@ body:has(#main_holder:not(:empty)) #canvas {
 }
 
 /* CC. Filtro Czar durante il turno da giudice */
+/* CC. Filtro Czar durante il turno da giudice */
 .game_hand_filter {
   position: absolute !important;
   top: 0 !important;
@@ -805,9 +806,14 @@ body:has(#main_holder:not(:empty)) #canvas {
   backdrop-filter: blur(3px) !important;
   z-index: 50 !important;
   border-radius: 12px !important;
-  display: flex !important;
+  display: flex; /* Rimosso !important per permettere a .hide di funzionare */
   align-items: center !important;
   justify-content: center !important;
+}
+
+/* Nasconde categoricamente il filtro quando non sei Czar */
+.game_hand_filter.hide {
+  display: none !important;
 }
 
 .game_hand_filter_text {
@@ -819,6 +825,10 @@ body:has(#main_holder:not(:empty)) #canvas {
   border-radius: 24px !important;
   box-shadow: 0 4px 14px rgba(0,0,0,0.1) !important;
   border: 1px solid #d0d7de !important;
+}
+
+.game_hand_filter_text:empty {
+  display: none !important;
 }
 
 
