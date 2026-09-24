@@ -1,572 +1,591 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Pretend You're Xyzzy</title>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
-<script type="text/javascript" src="js/jquery.cookie.js"></script>
-<script type="text/javascript" src="js/jquery.json.js"></script>
-<script type="text/javascript" src="js/QTransform.js"></script>
-<script type="text/javascript" src="js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/cah.js"></script>
-<script type="text/javascript" src="js/cah.config.js"></script>
-<script type="text/javascript" src="js/cah.constants.js"></script>
-<script type="text/javascript" src="js/cah.log.js"></script>
-<script type="text/javascript" src="js/cah.gamelist.js"></script>
-<script type="text/javascript" src="js/cah.card.js"></script>
-<script type="text/javascript" src="js/cah.cardset.js"></script>
-<script type="text/javascript" src="js/cah.game.js"></script>
-<script type="text/javascript" src="js/cah.preferences.js"></script>
-<script type="text/javascript" src="js/cah.longpoll.js"></script>
-<script type="text/javascript" src="js/cah.longpoll.handlers.js"></script>
-<script type="text/javascript" src="js/cah.ajax.js"></script>
-<script type="text/javascript" src="js/cah.ajax.builder.js"></script>
-<script type="text/javascript" src="js/cah.ajax.handlers.js"></script>
-<script type="text/javascript" src="js/cah.app.js"></script>
-<script type="text/javascript" src="js/custom.js"></script>
-<link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="smartphone.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
-<jsp:include page="analytics.jsp" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Pretend You're Xyzzy</title>
+  <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="js/jquery-migrate-1.2.1.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/jquery.json.js"></script>
+  <script type="text/javascript" src="js/QTransform.js"></script>
+  <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/cah.js"></script>
+  <script type="text/javascript" src="js/cah.config.js"></script>
+  <script type="text/javascript" src="js/cah.constants.js"></script>
+  <script type="text/javascript" src="js/cah.log.js"></script>
+  <script type="text/javascript" src="js/cah.gamelist.js"></script>
+  <script type="text/javascript" src="js/cah.card.js"></script>
+  <script type="text/javascript" src="js/cah.cardset.js"></script>
+  <script type="text/javascript" src="js/cah.game.js"></script>
+  <script type="text/javascript" src="js/cah.preferences.js"></script>
+  <script type="text/javascript" src="js/cah.longpoll.js"></script>
+  <script type="text/javascript" src="js/cah.longpoll.handlers.js"></script>
+  <script type="text/javascript" src="js/cah.ajax.js"></script>
+  <script type="text/javascript" src="js/cah.ajax.builder.js"></script>
+  <script type="text/javascript" src="js/cah.ajax.handlers.js"></script>
+  <script type="text/javascript" src="js/cah.app.js"></script>
+  <script type="text/javascript" src="js/custom.js"></script>
+  <link rel="stylesheet" type="text/css" href="cah.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="smartphone.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="jquery-ui.min.css" media="screen" />
+  <jsp:include page="analytics.jsp" />
 </head>
 
 <body id="gamebody">
 
-<div id="welcome">
-  <h1 tabindex="0">
-    Pretend You're <dfn
-    title="Xyzzy è un bot di 'Intelligenza Artificiale Non Intelligente'. Farai molto più senso tu di lui in questo gioco.">
-    Xyzzy</dfn>
-  </h1>
-  <h3>Un clone di <a href="http://cardsagainsthumanity.com/">Cards Against Humanity</a>.</h3>
-  <p>
-    Se è la prima volta che giochi, potresti voler consultare <a href="index.jsp">il registro delle modifiche e
-    l'elenco dei problemi noti</a>.
-  </p>
-  <p>
-    L'indirizzo IP del tuo dispositivo verrà <strong>sempre</strong> registrato al caricamento del client di gioco.
-    Non è in alcun modo collegato al tuo nome utente, tranne in caso di eventuale errore del server. I dati delle partite
-    vengono salvati permanentemente, ma in forma del tutto anonima.
-  </p>
-  <p tabindex="0">Ultimo aggiornamento importante:</p>
-  <ul>
-    <li>La chat globale e le carte personalizzabili a riempimento sono state disabilitate sul server ufficiale.</li>
-  </ul>
-  <h2>Benvenuto nel server di gioco! Puoi giocare assieme ai tuoi amici semplicemente entrando nella stessa stanza di gioco o creandone una nuova.</h2>
-  <div id="nickbox">
-    <label for="nickname">Nickname:</label>
-    <input type="text" id="nickname" value="" maxlength="30" role="textbox"
-        aria-label="Inserisci Il Tuo Nickname" data-lpignore="true" />
-    <label for="idcode">
-    <dfn title="Fornisci un codice segreto di identificazione per autenticarti nella chat (opzionale).">
-    Codice Identificazione (Facoltativo):</dfn></label>
-    <input type="password" id="idcode" value="" maxlength="100"
-      placeholder="Opzionale (Lascia Vuoto Se Non Ne Hai Uno)"
-      aria-label="Opzionalmente inserisci un codice di identificazione." />
-    <a href="https://github.com/ajanata/PretendYoureXyzzy/wiki/Identification-Codes">(Guida)</a>
-    <input type="button" id="nicknameconfirm" value="Entra" />
-    <span id="nickbox_error" class="error"></span>
-  </div>
-  <p><a href="privacy.html"><strong>Nota importante:</strong> Leggi l'informativa sulla privacy per
-  scoprire quali dati di gioco vengono raccolti e come vengono gestiti.</a></p>
-  <p>
-    Pretend You're Xyzzy è un clone di Cards Against Humanity, reperibile su
-    <a href="http://www.cardsagainsthumanity.com/">cardsagainsthumanity.com</a>, dove puoi acquistarlo
-    oppure scaricarlo e stamparlo liberamente. È distribuito sotto licenza
-    <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons - Attribuzione -
-    Non commerciale - Condividi allo stesso modo</a>. Questa versione web non è in alcun modo approvata o sponsorizzata da
-    cardsagainsthumanity.com. Puoi scaricare il codice sorgente originale su
-    <a href="https://github.com/ajanata/PretendYoureXyzzy">GitHub</a>.
-  </p>
-</div>
-
-<div id="canvas" class="hide">
-  <div id="menubar">
-    <div id="menubar_left">
-      <input type="button" id="refresh_games" class="hide" value="Aggiorna Stanze" />
-      <input type="button" id="create_game" class="hide" value="Crea Partita" />
-      <input type="text" id="filter_games" class="hide" placeholder="Filtra stanze per parola chiave"
-          data-lpignore="true"/>
-
-      <input type="button" id="leave_game" class="hide" value="Esci dalla Partita" />
-      <input type="button" id="start_game" class="hide" value="Avvia Partita" />
-      <input type="button" id="stop_game" class="hide" value="Ferma Partita" />
+  <div id="welcome">
+    <h1 tabindex="0">
+      Pretend You're <dfn
+        title="Xyzzy è un bot di 'Intelligenza Artificiale Non Intelligente'. Farai molto più senso tu di lui in questo gioco.">
+        Xyzzy</dfn>
+    </h1>
+    <h3>Un clone di <a href="http://cardsagainsthumanity.com/">Cards Against Humanity</a>.</h3>
+    <p>
+      Se è la prima volta che giochi, potresti voler consultare <a href="index.jsp">il registro delle modifiche e
+        l'elenco dei problemi noti</a>.
+    </p>
+    <p>
+      L'indirizzo IP del tuo dispositivo verrà <strong>sempre</strong> registrato al caricamento del client di gioco.
+      Non è in alcun modo collegato al tuo nome utente, tranne in caso di eventuale errore del server. I dati delle
+      partite
+      vengono salvati permanentemente, ma in forma del tutto anonima.
+    </p>
+    <p tabindex="0">Ultimo aggiornamento importante:</p>
+    <ul>
+      <li>La chat globale e le carte personalizzabili a riempimento sono state disabilitate sul server ufficiale.</li>
+    </ul>
+    <h2>Benvenuto nel server di gioco! Puoi giocare assieme ai tuoi amici semplicemente entrando nella stessa stanza di
+      gioco o creandone una nuova.</h2>
+    <div id="nickbox">
+      <label for="nickname">Nickname:</label>
+      <input type="text" id="nickname" value="" maxlength="30" role="textbox" aria-label="Inserisci Il Tuo Nickname"
+        data-lpignore="true" />
+      <label for="idcode">
+        <dfn title="Fornisci un codice segreto di identificazione per autenticarti nella chat (opzionale).">
+          Codice Identificazione (Facoltativo):</dfn></label>
+      <input type="password" id="idcode" value="" maxlength="100"
+        placeholder="Opzionale (Lascia Vuoto Se Non Ne Hai Uno)"
+        aria-label="Opzionalmente inserisci un codice di identificazione." />
+      <a href="https://github.com/ajanata/PretendYoureXyzzy/wiki/Identification-Codes">(Guida)</a>
+      <input type="button" id="nicknameconfirm" value="Entra" />
+      <span id="nickbox_error" class="error"></span>
     </div>
-    <div id="menubar_right">
-      Durata timer corrente: <span id="current_timer">0</span> secondi
-      <input type="button" id="view_cards" value="Visualizza Carte"
+    <p><a href="privacy.html"><strong>Nota importante:</strong> Leggi l'informativa sulla privacy per
+        scoprire quali dati di gioco vengono raccolti e come vengono gestiti.</a></p>
+    <p>
+      Pretend You're Xyzzy è un clone di Cards Against Humanity, reperibile su
+      <a href="http://www.cardsagainsthumanity.com/">cardsagainsthumanity.com</a>, dove puoi acquistarlo
+      oppure scaricarlo e stamparlo liberamente. È distribuito sotto licenza
+      <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons - Attribuzione -
+        Non commerciale - Condividi allo stesso modo</a>. Questa versione web non è in alcun modo approvata o
+      sponsorizzata da
+      cardsagainsthumanity.com. Puoi scaricare il codice sorgente originale su
+      <a href="https://github.com/ajanata/PretendYoureXyzzy">GitHub</a>.
+    </p>
+  </div>
+
+  <div id="canvas" class="hide">
+    <div id="menubar">
+      <div id="menubar_left">
+        <input type="button" id="refresh_games" class="hide" value="Aggiorna Stanze" />
+        <input type="button" id="create_game" class="hide" value="Crea Partita" />
+        <input type="text" id="filter_games" class="hide" placeholder="Filtra stanze per parola chiave"
+          data-lpignore="true" />
+
+        <input type="button" id="leave_game" class="hide" value="Esci dalla Partita" />
+        <input type="button" id="start_game" class="hide" value="Avvia Partita" />
+        <input type="button" id="stop_game" class="hide" value="Ferma Partita" />
+      </div>
+      <div id="menubar_right">
+        Durata timer corrente: <span id="current_timer">0</span> secondi
+        <input type="button" id="view_cards" value="Visualizza Carte"
           title="Apri una nuova finestra per vedere tutte le carte presenti nel gioco."
           onclick="window.open('viewcards.jsp', 'viewcards');" />
-      <input type="button" id="logout" value="Disconnetti" />
-    </div>
-  </div>
-  <div id="main">
-    <div id="game_list" class="hide"></div>
-    <div id="main_holder"></div>
-  </div>
-</div>
-<div id="bottom" class="hide">
-  <div id="info_area">
-  </div>
-  <input type="checkbox" id="chat_collapse_toggle" class="chat_toggle_cb" style="display: none;" />
-  <label for="chat_collapse_toggle" class="chat_toggle_bar">
-    <span class="chat_toggle_title">💬 Chat</span>
-    <span class="chat_toggle_status"></span>
-  </label>
-  <div id="tabs">
-    <ul>
-      <li><a href="#tab-preferences" class="tab-button">Preferenze Utente</a></li>
-      <li><a href="#tab-gamelist-filters" class="tab-button">Filtri Mazzi Stanze</a></li>
-      <li><a href="#tab-global" class="tab-button" id="button-global">Chat Globale</a></li>
-    </ul>
-    <!-- Tab Preferenze Utente Modernizzata -->
-    <div id="tab-preferences" class="preferences_panel">
-      <div class="pref_header">
-        <div class="pref_title_group">
-          <h4>Preferenze Utente</h4>
-          <span class="pref_subtitle">Personalizza l'esperienza di gioco e la privacy</span>
-        </div>
-        <div class="pref_actions">
-          <input type="button" class="btn_secondary" value="Ripristina" onclick="cah.Preferences.load();" />
-          <input type="button" class="btn_primary" value="Salva Modifiche" onclick="cah.Preferences.save();" />
-        </div>
-      </div>
-
-      <div class="pref_grid">
-        <!-- Colonna Opzioni Switch -->
-        <div class="pref_toggles_card">
-          <label class="custom_toggle_row" for="hide_connect_quit">
-            <input type="checkbox" id="hide_connect_quit" />
-            <div class="toggle_label_text">
-              <strong>Nascondi notifiche di entrata e uscita</strong>
-              <span>Non visualizzare i messaggi quando gli utenti si connettono o lasciano il server.</span>
-            </div>
-          </label>
-
-          <label class="custom_toggle_row" for="no_persistent_id">
-            <input type="checkbox" id="no_persistent_id" />
-            <div class="toggle_label_text">
-              <strong>Disattiva tracciamento cronologia carte</strong>
-              <span>Evita che il server memorizzi quali carte hai già visto tra sessioni differenti.</span>
-            </div>
-          </label>
-        </div>
-
-        <!-- Colonna Utenti Ignorati -->
-        <div class="pref_ignore_card">
-          <label for="ignore_list"><strong>Lista utenti ignorati:</strong></label>
-          <span class="ignore_helper">Inserisci un nickname per riga da escludere dalla chat:</span>
-          <textarea id="ignore_list" placeholder="Es. Tizio&#10;Caio"></textarea>
-        </div>
+        <input type="button" id="logout" value="Disconnetti" />
       </div>
     </div>
-    
-    <!-- Tab Filtri Mazzi Modernizzata -->
-    <div id="tab-gamelist-filters" class="filters_panel">
-      <div class="pref_header">
-        <div class="pref_title_group">
-          <h4>Filtri Mazzi per Elenco Stanze</h4>
-          <span class="pref_subtitle">Clicca "Salva" e poi "Aggiorna Stanze" in alto per applicarli.</span>
+    <div id="main">
+      <div id="game_list" class="hide"></div>
+      <div id="main_holder"></div>
+    </div>
+  </div>
+
+  <div id="bottom" class="hide">
+    <div id="info_area">
+    </div>
+    <!-- Barra toggle touch visibile SOLO su Smartphone per espandere/collassare la chat -->
+    <div id="chat_toggle_bar" class="chat_toggle_bar">
+      <span class="chat_toggle_title">💬 Chat</span>
+      <span class="chat_toggle_status">Mostra ▲</span>
+    </div>
+    <div id="tabs">
+      <ul>
+        <li><a href="#tab-preferences" class="tab-button">Preferenze Utente</a></li>
+        <li><a href="#tab-gamelist-filters" class="tab-button">Filtri Mazzi Stanze</a></li>
+        <li><a href="#tab-global" class="tab-button" id="button-global">Chat Globale</a></li>
+      </ul>
+
+      <!-- Tab Preferenze Utente -->
+      <div id="tab-preferences" class="preferences_panel">
+        <div class="pref_header">
+          <div class="pref_title_group">
+            <h4>Preferenze Utente</h4>
+            <span class="pref_subtitle">Personalizza l'esperienza di gioco e la privacy</span>
+          </div>
+          <div class="pref_actions">
+            <input type="button" class="btn_secondary" value="Ripristina" onclick="cah.Preferences.load();" />
+            <input type="button" class="btn_primary" value="Salva Modifiche" onclick="cah.Preferences.save();" />
+          </div>
         </div>
-        <div class="pref_actions">
-          <input type="button" class="btn_secondary" value="Ripristina" onclick="cah.Preferences.load();" />
-          <input type="button" class="btn_primary" value="Salva Filtri" onclick="cah.Preferences.save();" />
+
+        <div class="pref_grid">
+          <div class="pref_toggles_card">
+            <label class="custom_toggle_row" for="hide_connect_quit">
+              <input type="checkbox" id="hide_connect_quit" />
+              <div class="toggle_label_text">
+                <strong>Nascondi notifiche di entrata e uscita</strong>
+                <span>Non visualizzare i messaggi quando gli utenti si connettono o lasciano il server.</span>
+              </div>
+            </label>
+
+            <label class="custom_toggle_row" for="no_persistent_id">
+              <input type="checkbox" id="no_persistent_id" />
+              <div class="toggle_label_text">
+                <strong>Disattiva tracciamento cronologia carte</strong>
+                <span>Evita che il server memorizzi quali carte hai già visto tra sessioni differenti.</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="pref_ignore_card">
+            <label for="ignore_list"><strong>Lista utenti ignorati:</strong></label>
+            <span class="ignore_helper">Inserisci un nickname per riga da escludere dalla chat:</span>
+            <textarea id="ignore_list" placeholder="Es. Tizio&#10;Caio"></textarea>
+          </div>
         </div>
       </div>
 
-      <div class="filter_columns_container">
-        <!-- 1. Esclusi -->
-        <div class="filter_col filter_banned">
-          <div class="col_header">
-            <span class="badge_status status_banned">🚫 Esclusi</span>
-            <span class="col_desc">Non mostrare stanze con questi mazzi</span>
+      <!-- Tab Filtri Mazzi -->
+      <div id="tab-gamelist-filters" class="filters_panel">
+        <div class="pref_header">
+          <div class="pref_title_group">
+            <h4>Filtri Mazzi per Elenco Stanze</h4>
+            <span class="pref_subtitle">Clicca "Salva" e poi "Aggiorna Stanze" in alto per applicarli.</span>
           </div>
-          <select id="cardsets_banned" multiple="multiple"></select>
-          <div class="filter_btn_group">
-            <input type="button" id="banned_remove" class="btn_filter_action" value="Rimuovi ➔"
-              onclick="cah.Preferences.transferCardSets('banned', 'neutral')" />
+          <div class="pref_actions">
+            <input type="button" class="btn_secondary" value="Ripristina" onclick="cah.Preferences.load();" />
+            <input type="button" class="btn_primary" value="Salva Filtri" onclick="cah.Preferences.save();" />
           </div>
         </div>
 
-        <!-- 2. Neutri -->
-        <div class="filter_col filter_neutral">
-          <div class="col_header">
-            <span class="badge_status status_neutral">⚖️ Neutri</span>
-            <span class="col_desc">Nessuna preferenza su questi mazzi</span>
+        <div class="filter_columns_container">
+          <!-- 1. Esclusi -->
+          <div class="filter_col filter_banned">
+            <div class="col_header">
+              <span class="badge_status status_banned">🚫 Esclusi</span>
+              <span class="col_desc">Non mostrare stanze con questi mazzi</span>
+            </div>
+            <select id="cardsets_banned" multiple="multiple"></select>
+            <div class="filter_btn_group">
+              <input type="button" id="banned_remove" class="btn_filter_action" value="Rimuovi ➔"
+                onclick="cah.Preferences.transferCardSets('banned', 'neutral')" />
+            </div>
           </div>
-          <select id="cardsets_neutral" multiple="multiple"></select>
-          <div class="filter_btn_group dual_actions">
-            <input type="button" id="banned_add" class="btn_filter_action btn_danger" value="⬅️ Escludi"
+
+          <!-- 2. Neutri -->
+          <div class="filter_col filter_neutral">
+            <div class="col_header">
+              <span class="badge_status status_neutral">⚖️ Neutri</span>
+              <span class="col_desc">Nessuna preferenza su questi mazzi</span>
+            </div>
+            <select id="cardsets_neutral" multiple="multiple"></select>
+            <div class="filter_btn_group dual_actions">
+              <input type="button" id="banned_add" class="btn_filter_action btn_danger" value="⬅️ Escludi"
                 onclick="cah.Preferences.transferCardSets('neutral', 'banned')" />
-            <input type="button" id="required_add" class="btn_filter_action btn_success" value="Richiedi ➡️"
+              <input type="button" id="required_add" class="btn_filter_action btn_success" value="Richiedi ➡️"
                 onclick="cah.Preferences.transferCardSets('neutral', 'required')" />
+            </div>
           </div>
-        </div>
 
-        <!-- 3. Richiesti -->
-        <div class="filter_col filter_required">
-          <div class="col_header">
-            <span class="badge_status status_required">⭐ Richiesti</span>
-            <span class="col_desc">Mostra solo stanze che includono questi mazzi</span>
-          </div>
-          <select id="cardsets_required" multiple="multiple"></select>
-          <div class="filter_btn_group">
-            <input type="button" id="required_remove" class="btn_filter_action" value="⬅️ Rimuovi"
+          <!-- 3. Richiesti -->
+          <div class="filter_col filter_required">
+            <div class="col_header">
+              <span class="badge_status status_required">⭐ Richiesti</span>
+              <span class="col_desc">Mostra solo stanze che includono questi mazzi</span>
+            </div>
+            <select id="cardsets_required" multiple="multiple"></select>
+            <div class="filter_btn_group">
+              <input type="button" id="required_remove" class="btn_filter_action" value="⬅️ Rimuovi"
                 onclick="cah.Preferences.transferCardSets('required', 'neutral')" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div id="tab-global">
-      <div class="log"></div>
-      <input type="text" class="chat" maxlength="200" aria-label="Scrivi un messaggio in chat..."
-          data-lpignore="true" placeholder="Scrivi un messaggio in chat..." />
-      <input type="button" class="chat_submit" value="Invia" />
+
+      <!-- Tab Chat Globale -->
+      <div id="tab-global">
+        <div class="log"></div>
+        <input type="text" class="chat" maxlength="200" aria-label="Scrivi un messaggio in chat..." data-lpignore="true"
+          placeholder="Scrivi un messaggio in chat..." />
+        <input type="button" class="chat_submit" value="Invia" />
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Template for game lobbies in the game list. -->
-<div class="hide">
-	<div id="gamelist_lobby_template" class="gamelist_lobby" tabindex="0">
-	<div class="gamelist_lobby_left">
-    <h3>
-      Partita di <span class="gamelist_lobby_host">host</span>
-      (<span class="gamelist_lobby_player_count"></span>/<span class="gamelist_lobby_max_players"></span>,
-      <span class="gamelist_lobby_spectator_count"></span>/<span class="gamelist_lobby_max_spectators"></span>)
-      <span class="gamelist_lobby_status">status</span>
-    </h3>
-	<div>
-		<strong>Giocatori:</strong>
-		<span class="gamelist_lobby_players">host, player1, player2</span>
-		</div>
-		<div>
-		<strong>Spettatori:</strong>
-		<span class="gamelist_lobby_spectators">spectator1</span>
-		</div>
-		<div><strong>Obiettivo:</strong> <span class="gamelist_lobby_goal"></span></div>
-		<div>
-		<strong>Mazzi:</strong> <span class="gamelist_lobby_cardset"></span>
-		</div>
-		<div class="hide">Partita <span class="gamelist_lobby_id">###</span></div>
-	  </div>
-	  <div class="gamelist_lobby_right">
-	    <input type="button" class="gamelist_lobby_join" value="Entra" />
-	    <input type="button" class="gamelist_lobby_spectate" value="Osserva" />
-	  </div>
-	</div>
-</div>
-
-<!-- Template for face-up black cards. -->
-<div class="hide">
-	<div id="black_up_template" class="card blackcard">
-	  <span class="card_text">Testo di esempio per la carta nera.</span>
-	  <div class="logo">
-	    <div class="logo_1 logo_element">
-	    </div>
-	    <div class="logo_2 logo_element">
-	    </div>
-	    <div class="logo_3 logo_element watermark_container">
-        <br/>
-        <span class="watermark"></span>
-	    </div>
-	    <div class="logo_text">Pretend You're Xyzzy</div>
-	  </div>
-    <div class="card_metadata">
-      <div class="draw hide">PESCA <div class="card_number"></div></div>
-      <div class="pick hide">SCEGLI <div class="card_number"></div></div>
-    </div>
-	</div>
-</div>
-
-<!-- Template for face-down black cards. -->
-<div class="hide">
-	<div id="black_down_template" class="card blackcard">
-	</div>
-</div>
-
-<!-- Template for face-up white cards. -->
-<div class="hide">
-	<div id="white_up_template" class="card whitecard">
-	  <span class="card_text" role="button" tabindex="0">Testo di esempio per la carta bianca.</span>
-	  <div class="logo">
-	    <div class="logo_1 logo_element">
-	    </div>
-	    <div class="logo_2 logo_element">
-	    </div>
-	    <div class="logo_3 logo_element watermark_container">
-        <br/>
-        <span class="watermark"></span>
-	    </div>
-	    <div class="logo_text">Pretend You're Xyzzy</div>
-	  </div>
-	</div>
-</div>
-
-<!-- Template for face-down white cards. -->
-<div class="hide">
-	<div id="white_down_template" class="card whitecard">
-	</div>
-</div>
-
-<!-- Template for game lobbies. We have a holder here for designing only. -->
-<div style="width: 100%; max-width: 1200px; position: relative;" class="hide">
-  <div id="game_template" class="game">
-    <div class="game_top">
-      <div class="game_room_badge">
-        <span class="game_room_icon">🎮</span>
-        <span class="game_room_name">Stanza di Gioco</span>
+  <!-- Template for game lobbies in the game list. -->
+  <div class="hide">
+    <div id="gamelist_lobby_template" class="gamelist_lobby" tabindex="0">
+      <div class="gamelist_lobby_left">
+        <h3>
+          Partita di <span class="gamelist_lobby_host">host</span>
+          (<span class="gamelist_lobby_player_count"></span>/<span class="gamelist_lobby_max_players"></span>,
+          <span class="gamelist_lobby_spectator_count"></span>/<span class="gamelist_lobby_max_spectators"></span>)
+          <span class="gamelist_lobby_status">status</span>
+        </h3>
+        <div>
+          <strong>Giocatori:</strong>
+          <span class="gamelist_lobby_players">host, player1, player2</span>
+        </div>
+        <div>
+          <strong>Spettatori:</strong>
+          <span class="gamelist_lobby_spectators">spectator1</span>
+        </div>
+        <div><strong>Obiettivo:</strong> <span class="gamelist_lobby_goal"></span></div>
+        <div>
+          <strong>Mazzi:</strong> <span class="gamelist_lobby_cardset"></span>
+        </div>
+        <div class="hide">Partita <span class="gamelist_lobby_id">###</span></div>
       </div>
-      <div class="game_message" role="status">
-        In attesa del server...
-      </div>
-      <div class="game_top_actions">
-        <input type="button" class="game_show_last_round game_menu_bar" value="Ultimo Round" disabled="disabled" />
-        <label class="game_menu_bar checkbox">
-          <input type="checkbox" class="game_animate_cards" checked="checked" />
-          <span>Anima Carte</span>
-        </label>
-        <!-- game_show_options mantenuto nel DOM per evitare crash JS ma nascosto con .hide_setting_btn -->
-        <input type="button" class="game_show_options game_menu_bar hide_setting_btn" value="Opzioni" />
+      <div class="gamelist_lobby_right">
+        <input type="button" class="gamelist_lobby_join" value="Entra" />
+        <input type="button" class="gamelist_lobby_spectate" value="Osserva" />
       </div>
     </div>
-    
-    <div class="game_body_area">
-      <!-- Opzioni Partita pre-inizio (occupano tutto lo spazio fino all'avvio) -->
-      <div class="game_options">
+  </div>
+
+  <!-- Template for face-up black cards. -->
+  <div class="hide">
+    <div id="black_up_template" class="card blackcard">
+      <span class="card_text">Testo di esempio per la carta nera.</span>
+      <div class="logo">
+        <div class="logo_1 logo_element">
+        </div>
+        <div class="logo_2 logo_element">
+        </div>
+        <div class="logo_3 logo_element watermark_container">
+          <br />
+          <span class="watermark"></span>
+        </div>
+        <div class="logo_text">Pretend You're Xyzzy</div>
+      </div>
+      <div class="card_metadata">
+        <div class="draw hide">PESCA <div class="card_number"></div>
+        </div>
+        <div class="pick hide">SCEGLI <div class="card_number"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template for face-down black cards. -->
+  <div class="hide">
+    <div id="black_down_template" class="card blackcard">
+    </div>
+  </div>
+
+  <!-- Template for face-up white cards. -->
+  <div class="hide">
+    <div id="white_up_template" class="card whitecard">
+      <span class="card_text" role="button" tabindex="0">Testo di esempio per la carta bianca.</span>
+      <div class="logo">
+        <div class="logo_1 logo_element">
+        </div>
+        <div class="logo_2 logo_element">
+        </div>
+        <div class="logo_3 logo_element watermark_container">
+          <br />
+          <span class="watermark"></span>
+        </div>
+        <div class="logo_text">Pretend You're Xyzzy</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template for face-down white cards. -->
+  <div class="hide">
+    <div id="white_down_template" class="card whitecard">
+    </div>
+  </div>
+
+  <!-- Template for game lobbies. -->
+  <div style="width: 100%; max-width: 1200px; position: relative;" class="hide">
+    <div id="game_template" class="game">
+      <div class="game_top">
+        <div class="game_room_badge">
+          <span class="game_room_icon">🎮</span>
+          <span class="game_room_name">Stanza di Gioco</span>
+        </div>
+        <div class="game_message" role="status">
+          In attesa del server...
+        </div>
+        <div class="game_top_actions">
+          <input type="button" class="game_show_last_round game_menu_bar" value="Ultimo Round" disabled="disabled" />
+          <label class="game_menu_bar checkbox">
+            <input type="checkbox" class="game_animate_cards" checked="checked" />
+            <span>Anima Carte</span>
+          </label>
+          <input type="button" class="game_show_options game_menu_bar hide_setting_btn" value="Opzioni" />
+        </div>
       </div>
 
-      <!-- Tavolo di gioco (attivo durante la partita) -->
-      <div class="game_board">
-        <div class="game_left_side">
-          <div class="game_black_card_wrapper">
-            <span tabindex="0">La carta nera per
+      <div class="game_body_area">
+        <!-- Opzioni Partita pre-inizio -->
+        <div class="game_options">
+        </div>
+
+        <!-- Tavolo di gioco (attivo durante la partita) -->
+        <div class="game_board">
+          <div class="game_left_side">
+            <div class="game_black_card_wrapper">
+              <span tabindex="0">La carta nera per
                 <span class="game_black_card_round_indicator">questo round è</span>:
-            </span>
-            <div class="game_black_card" tabindex="0">
+              </span>
+              <div class="game_black_card" tabindex="0">
+              </div>
+            </div>
+            <input type="button" class="confirm_card" value="Conferma Selezione" />
+          </div>
+          <div class="game_right_side hide">
+            <div class="game_right_side_box game_white_card_wrapper">
+              <span tabindex="0">Le carte bianche giocate in questo round:</span>
+              <div class="game_white_cards game_right_side_cards">
+              </div>
+            </div>
+            <div class="game_right_side_box game_last_round hide">
+              Il round precedente è stato vinto da <span class="game_last_round_winner"></span>.
+              <div class="game_last_round_cards game_right_side_cards">
+              </div>
             </div>
           </div>
-          <input type="button" class="confirm_card" value="Conferma Selezione" />
         </div>
-        <div class="game_right_side hide">
-          <div class="game_right_side_box game_white_card_wrapper">
-            <span tabindex="0">Le carte bianche giocate in questo round:</span>
-            <div class="game_white_cards game_right_side_cards">
-            </div>
+
+        <!-- Mano di carte del giocatore in basso -->
+        <div class="game_hand">
+          <div class="game_hand_filter hide">
+            <span class="game_hand_filter_text"></span>
           </div>
-          <div class="game_right_side_box game_last_round hide">
-            Il round precedente è stato vinto da <span class="game_last_round_winner"></span>.
-            <div class="game_last_round_cards game_right_side_cards">
-            </div>
+          <span class="your_hand" tabindex="0">La Tua Mano</span>
+          <div class="game_hand_cards">
           </div>
         </div>
       </div>
-      
-      <!-- Mano di carte del giocatore in basso -->
-      <div class="game_hand">
-        <div class="game_hand_filter hide">
-          <span class="game_hand_filter_text"></span>
+    </div>
+  </div>
+
+  <!-- Template for scoreboard container. -->
+  <div style="height: 215px; border: 1px solid black;" class="hide">
+    <div id="scoreboard_template" class="scoreboard">
+      <div class="game_message" tabindex="0">Classifica</div>
+    </div>
+  </div>
+
+  <!-- Template for scoreboard score card. -->
+  <div class="scoreboard hide" style="height: 215px;">
+    <div id="scorecard_template" class="scorecard" tabindex="0">
+      <div class="scorecard_player">NomeGiocatore</div>
+      <div class="scorecard_points">
+        <span class="scorecard_score">0</span>
+        <span class="scorecard_point_title">Punti</span>
+        <span class="scorecard_s" style="display: none;"></span>
+      </div>
+      <div class="scorecard_status">Stato</div>
+    </div>
+  </div>
+
+  <!-- Template for round card set binder. -->
+  <div class="hide">
+    <div id="game_white_cards_binder_template" class="game_white_cards_binder hide">
+    </div>
+  </div>
+
+  <!-- Previous round display. -->
+  <div class="hide">
+    <div id="previous_round_template" class="previous_round">
+      <input type="button" class="previous_round_close" value="Chiudi" />
+      Vincitore del round: <span class="previous_round_winner"></span>
+      <div class="previous_round_cards"></div>
+    </div>
+  </div>
+
+  <!-- Template for game options. -->
+  <div class="hide">
+    <div class="game_options" id="game_options_template">
+
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+        <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #1a1a1a;">Opzioni partita</h3>
+        <span class="options_host_only" style="margin: 0;">Solo l'host della partita può modificare le opzioni.</span>
+      </div>
+
+      <!-- 1. Password partita con occhio integrato -->
+      <div class="game_password_box">
+        <label id="game_password_template_label" for="game_password_template">
+          Password partita (opzionale):
+        </label>
+
+        <div class="password_input_wrapper">
+          <input type="password" id="game_password_template" class="game_password" placeholder="Nessuna password"
+            maxlength="50" />
+
+          <button type="button" id="game_hide_password_template" class="game_toggle_password game_hide_password"
+            title="Mostra password" aria-label="Mostra password">
+            <svg class="eye_icon eye_open" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+            </svg>
+            <svg class="eye_icon eye_closed" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path
+                d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.44-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" />
+            </svg>
+          </button>
         </div>
-        <span class="your_hand" tabindex="0">La Tua Mano</span>
-        <div class="game_hand_cards">
+
+        <input type="password" id="game_fake_password_template" class="game_fake_password hide" />
+      </div>
+
+      <!-- 2. Parametri principali -->
+      <div
+        style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; padding: 8px 12px; background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <label id="score_limit_template_label" for="score_limit_template"
+            style="font-size: 13px; font-weight: 600;">Punti vittoria:</label>
+          <select id="score_limit_template" class="score_limit"
+            style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8" selected="selected">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <label id="player_limit_template_label" for="player_limit_template"
+            style="font-size: 13px; font-weight: 600;">Limite giocatori:</label>
+          <select id="player_limit_template" class="player_limit"
+            style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10" selected="selected">10</option>
+            <option value="12">12</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <label id="spectator_limit_template_label" for="spectator_limit_template"
+            style="font-size: 13px; font-weight: 600;">Spettatori:</label>
+          <select id="spectator_limit_template" class="spectator_limit"
+            style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+            <option value="0">0</option>
+            <option value="5">5</option>
+            <option value="10" selected="selected">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <label id="timer_multiplier_template_label" for="timer_multiplier_template"
+            style="font-size: 13px; font-weight: 600;">Timer:</label>
+          <select id="timer_multiplier_template" class="timer_multiplier"
+            style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
+            <option value="0.25x">0.25x</option>
+            <option value="0.5x">0.5x</option>
+            <option value="0.75x">0.75x</option>
+            <option selected="selected" value="1x">1x</option>
+            <option value="1.25x">1.25x</option>
+            <option value="1.5x">1.5x</option>
+            <option value="1.75x">1.75x</option>
+            <option value="2x">2x</option>
+            <option value="2.5x">2.5x</option>
+            <option value="3x">3x</option>
+            <option value="4x">4x</option>
+            <option value="5x">5x</option>
+            <option value="10x">10x</option>
+            <option value="Unlimited">Illimitato</option>
+          </select>
         </div>
       </div>
+
+      <!-- 3. Mazzi Personalizzati Cardcast -->
+      <div class="cardcast_toggle_row">
+        <span class="cardcast_toggle_title">🃏 Mazzi Personalizzati</span>
+        <label class="material_switch" for="cardcast_toggle_cb">
+          <input type="checkbox" id="cardcast_toggle_cb" />
+          <span class="switch_slider"></span>
+        </label>
+      </div>
+
+      <fieldset class="cardcast_custom_sets"
+        style="margin: 0 0 12px 0; padding: 10px 14px; border: 2px solid #2196F3; border-radius: 8px; background: #f8fbff; flex-shrink: 0;">
+        <legend style="font-weight: bold; color: #1976D2;">🃏 Mazzi Personalizzati (cast.clrtd.com)</legend>
+        <p style="margin: 0 0 8px 0; font-size: 13px; color: #333;">
+          Inserisci il codice del mazzo creato su <a href="https://cast.clrtd.com" target="_blank"
+            style="color: #1976D2; font-weight: bold;">cast.clrtd.com</a>:
+        </p>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="text" id="custom_cardcast_code" class="custom_cardcast_code" placeholder="Es. ABCDE"
+            maxlength="10"
+            style="text-transform: uppercase; font-weight: bold; width: 130px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff;" />
+          <input type="button" id="custom_cardcast_btn" class="custom_cardcast_btn" value="Aggiungi Mazzo"
+            style="padding: 6px 14px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;" />
+        </div>
+        <div id="custom_cardcast_status" class="custom_cardcast_status"
+          style="margin-top: 6px; font-size: 13px; font-weight: 500;"></div>
+
+        <div id="custom_cardcast_list_container" class="custom_cardcast_list_container"
+          style="margin-top: 8px; display: none;">
+          <strong style="font-size: 13px; color: #333;">Mazzi attivi in questa partita:</strong>
+          <ul id="custom_cardcast_list" class="custom_cardcast_list"
+            style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; color: #444;"></ul>
+        </div>
+      </fieldset>
+
+      <!-- 4. Sezione Mazzi Standard -->
+      <div class="deck_toggle_row standard_toggle_row">
+        <span class="deck_toggle_title">📦 Mazzi Standard</span>
+        <label class="material_switch" for="standard_decks_toggle_cb">
+          <input type="checkbox" id="standard_decks_toggle_cb" />
+          <span class="switch_slider"></span>
+        </label>
+      </div>
+
+      <fieldset class="card_sets">
+        <legend style="font-weight: 700; color: #24292f;">Mazzi di Carte Standard</legend>
+        <span class="base_card_sets"></span>
+        <span class="extra_card_sets"></span>
+      </fieldset>
     </div>
   </div>
-</div>
 
-<!-- Template for scoreboard container. Holder for design. -->
-<div style="height: 215px; border: 1px solid black;" class="hide">
-	<div id="scoreboard_template" class="scoreboard">
-    <div class="game_message" tabindex="0">Classifica</div>
-	</div>
-</div>
-
-<!-- Template for scoreboard score card. Holder for design. -->
-<!-- Template for scoreboard score card. Holder for design. -->
-<div class="scoreboard hide" style="height: 215px;">
-  <div id="scorecard_template" class="scorecard" tabindex="0">
-    <div class="scorecard_player">NomeGiocatore</div>
-    <div class="scorecard_points">
-      <span class="scorecard_score">0</span>
-      <span class="scorecard_point_title">Punti</span>
-      <!-- Mantenuto vuoto con display:none per non far fallire il selettore JS ed evitare che stampi la "s" -->
-      <span class="scorecard_s" style="display: none;"></span>
-    </div>
-    <div class="scorecard_status">Stato</div>
-  </div>
-</div>
-
-<!-- Template for round card set binder. -->
-<div class="hide">
-	<div id="game_white_cards_binder_template" class="game_white_cards_binder hide">
-	</div>
-</div>
-
-<!-- Previous round display. -->
-<div class="hide">
-  <div id="previous_round_template" class="previous_round">
-    <input type="button" class="previous_round_close" value="Chiudi" />
-    Vincitore del round: <span class="previous_round_winner"></span>
-    <div class="previous_round_cards"></div>
-  </div>
-</div>
-
-<!-- Template for game options. -->
-<div class="hide">
-  <div class="game_options" id="game_options_template">
-    
-    <!-- Intestazione: Titolo Opzioni + Targhetta Host -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-      <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #1a1a1a;">Opzioni partita</h3>
-      <span class="options_host_only" style="margin: 0;">Solo l'host della partita può modificare le opzioni.</span>
-    </div>
-
-    <!-- 1. Password partita con occhio integrato -->
-    <div class="game_password_box">
-      <label id="game_password_template_label" for="game_password_template">
-        Password partita (opzionale):
-      </label>
-      
-      <div class="password_input_wrapper">
-        <input type="password" id="game_password_template" class="game_password" placeholder="Nessuna password" maxlength="50" />
-        
-        <!-- Toggle Occhio Cliccabile SVG -->
-        <button type="button" id="game_hide_password_template" class="game_toggle_password game_hide_password" title="Mostra password" aria-label="Mostra password">
-          <!-- Icona Occhio Aperto -->
-          <svg class="eye_icon eye_open" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-          </svg>
-          <!-- Icona Occhio Barrato (mostrata quando revealed) -->
-          <svg class="eye_icon eye_closed" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-            <path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.44-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Elemento fake mantenuto nascosto per sicurezza selector -->
-      <input type="password" id="game_fake_password_template" class="game_fake_password hide" />
-    </div>
-
-    <!-- 2. Parametri principali compatti su riga orizzontale -->
-    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 12px; padding: 8px 12px; background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 8px;">
-      <div style="display: flex; align-items: center; gap: 6px;">
-        <label id="score_limit_template_label" for="score_limit_template" style="font-size: 13px; font-weight: 600;">Punti vittoria:</label>
-        <select id="score_limit_template" class="score_limit" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8" selected="selected">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-          <option value="15">15</option>
-        </select>
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 6px;">
-        <label id="player_limit_template_label" for="player_limit_template" style="font-size: 13px; font-weight: 600;">Limite giocatori:</label>
-        <select id="player_limit_template" class="player_limit" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10" selected="selected">10</option>
-          <option value="12">12</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-        </select>
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 6px;">
-        <label id="spectator_limit_template_label" for="spectator_limit_template" style="font-size: 13px; font-weight: 600;">Spettatori:</label>
-        <select id="spectator_limit_template" class="spectator_limit" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
-          <option value="0">0</option>
-          <option value="5">5</option>
-          <option value="10" selected="selected">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-        </select>
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 6px;">
-        <label id="timer_multiplier_template_label" for="timer_multiplier_template" style="font-size: 13px; font-weight: 600;">Timer:</label>
-        <select id="timer_multiplier_template" class="timer_multiplier" style="margin: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid #d0d7de; background: #fff;">
-          <option value="0.25x">0.25x</option>
-          <option value="0.5x">0.5x</option>
-          <option value="0.75x">0.75x</option>
-          <option selected="selected" value="1x">1x</option>
-          <option value="1.25x">1.25x</option>
-          <option value="1.5x">1.5x</option>
-          <option value="1.75x">1.75x</option>
-          <option value="2x">2x</option>
-          <option value="2.5x">2.5x</option>
-          <option value="3x">3x</option>
-          <option value="4x">4x</option>
-          <option value="5x">5x</option>
-          <option value="10x">10x</option>
-          <option value="Unlimited">Illimitato</option>
-        </select>
-      </div>
-    </div>
-    
-    <!-- 3. Mazzi Personalizzati Cardcast -->
-    <!-- Switch Toggle Mazzi Personalizzati (Visibile solo su Mobile) -->
-    <div class="cardcast_toggle_row">
-      <span class="cardcast_toggle_title">🃏 Mazzi Personalizzati</span>
-      <label class="material_switch" for="cardcast_toggle_cb">
-        <input type="checkbox" id="cardcast_toggle_cb">
-        <span class="switch_slider"></span>
-      </label>
-    </div>
-
-    <fieldset class="cardcast_custom_sets" style="margin: 0 0 12px 0; padding: 10px 14px; border: 2px solid #2196F3; border-radius: 8px; background: #f8fbff; flex-shrink: 0;">
-      <legend style="font-weight: bold; color: #1976D2;">🃏 Mazzi Personalizzati (cast.clrtd.com)</legend>
-      <p style="margin: 0 0 8px 0; font-size: 13px; color: #333;">
-        Inserisci il codice del mazzo creato su <a href="https://cast.clrtd.com" target="_blank" style="color: #1976D2; font-weight: bold;">cast.clrtd.com</a>:
-      </p>
-      <div style="display: flex; gap: 8px; align-items: center;">
-        <input type="text" id="custom_cardcast_code" class="custom_cardcast_code" placeholder="Es. ABCDE" maxlength="10" 
-               style="text-transform: uppercase; font-weight: bold; width: 130px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff;" />
-        <input type="button" id="custom_cardcast_btn" class="custom_cardcast_btn" value="Aggiungi Mazzo" 
-               style="padding: 6px 14px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;" />
-      </div>
-      <div id="custom_cardcast_status" class="custom_cardcast_status" style="margin-top: 6px; font-size: 13px; font-weight: 500;"></div>
-      
-      <div id="custom_cardcast_list_container" class="custom_cardcast_list_container" style="margin-top: 8px; display: none;">
-        <strong style="font-size: 13px; color: #333;">Mazzi attivi in questa partita:</strong>
-        <ul id="custom_cardcast_list" class="custom_cardcast_list" style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; color: #444;"></ul>
-      </div>
-    </fieldset>
-
-    <!-- 4. Sezione Mazzi Standard (si espande fino in fondo) -->
-    <!-- Switch Toggle Mazzi Standard (Visibile solo su Mobile) -->
-    <div class="deck_toggle_row standard_toggle_row">
-      <span class="deck_toggle_title">📦 Mazzi Standard</span>
-      <label class="material_switch" for="standard_decks_toggle_cb">
-        <input type="checkbox" id="standard_decks_toggle_cb">
-        <span class="switch_slider"></span>
-      </label>
-    </div>
-
-    <fieldset class="card_sets">
-      <legend style="font-weight: 700; color: #24292f;">Mazzi di Carte Standard</legend>
-      <span class="base_card_sets"></span>
-      <span class="extra_card_sets"></span>
-    </fieldset>
-  </div>
-</div>
-
-<div style="position:absolute; left:-99999px" role="alert" id="aria-notifications"></div>
+  <div style="position:absolute; left:-99999px" role="alert" id="aria-notifications"></div>
 </body>
 
 </html>
