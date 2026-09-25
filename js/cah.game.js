@@ -773,6 +773,7 @@ cah.Game.prototype.resizeCardHelper_ = function(data) {
  * Insert this game into the document.
  */
 cah.Game.prototype.insertIntoDocument = function() {
+  $("body").addClass("in-game").removeClass("in-lobby");
   $("#main_holder").empty().append(this.element_);
   $("#info_area").empty().append(this.scoreboardElement_);
   $("#leave_game").show();
@@ -1295,6 +1296,9 @@ cah.Game.prototype.dispose = function() {
   $("#stop_game").unbind().hide();
   $(window).off("resize.game_" + this.id_);
 
+  $("body").removeClass("in-game mobile-chat-open").addClass("in-lobby");
+  $("#bottom").removeClass("mobile_chat_expanded");
+
   cah.updateHash('');
 };
 
@@ -1458,6 +1462,8 @@ cah.Game.prototype.updateOptionsEnabled_ = function() {
     $(".options_host_only", this.optionsElement_).removeClass("hide");
     // Consenti sempre a tutti i giocatori di mostrare/nascondere la password inserita
     $(".game_toggle_password, .game_hide_password", this.optionsElement_).removeAttr("disabled");
+    // Consenti sempre a tutti i giocatori di aprire/chiudere l'elenco dei mazzi
+    $(".cardcast_toggle_cb, .standard_decks_toggle_cb, #cardcast_toggle_cb, #standard_decks_toggle_cb", this.optionsElement_).removeAttr("disabled");
   }
 };
 
@@ -1469,7 +1475,12 @@ cah.Game.prototype.updateOptionsEnabled_ = function() {
  */
 cah.Game.prototype.optionChanged_ = function(e) {
   // Ignora il click sul toggle password
-  if (e.target.classList.contains('game_toggle_password') || e.target.classList.contains('game_hide_password')) {
+  if (e && e.target && (e.target.classList.contains('game_toggle_password') || e.target.classList.contains('game_hide_password'))) {
+    return;
+  }
+  // Ignora il click sugli switch per mostrare/nascondere i mazzi
+  if (e && e.target && (e.target.classList.contains('cardcast_toggle_cb') || e.target.classList.contains('standard_decks_toggle_cb') ||
+      e.target.id === 'cardcast_toggle_cb' || e.target.id === 'standard_decks_toggle_cb')) {
     return;
   }
 

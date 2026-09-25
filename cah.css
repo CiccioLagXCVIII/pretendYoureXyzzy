@@ -15,58 +15,71 @@
   display: none;
 }
 
-html,
+html {
+  height: 100% !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
 body,
 #gamebody {
-  height: 100vh;
-  height: 100dvh;
-  max-height: 100dvh;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  /* Blocca categoricamente lo scroll della pagina intera */
+  height: 100% !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
 }
 
 body#gamebody {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: #eaedf0;
   color: #1a1a1a;
-  display: flex;
-  flex-direction: column;
+}
+
+/* Quando la schermata di login (#welcome) ha display: none o la classe .hide, deve sparire categoricamente */
+#welcome.hide,
+#welcome[style*="display: none"],
+#welcome[style*="display:none"] {
+  display: none !important;
 }
 
 /* Nasconde canvas e barra inferiore finché la schermata di login (#welcome) è aperta */
-body:has(#welcome:not([style*="display: none"]):not(.hide)) #canvas,
-body:has(#welcome:not([style*="display: none"]):not(.hide)) #bottom,
+body:has(#welcome:not([style*="display: none"]):not([style*="display:none"]):not(.hide)) #canvas,
+body:has(#welcome:not([style*="display: none"]):not([style*="display:none"]):not(.hide)) #bottom,
 #canvas.hide,
 #bottom.hide {
   display: none !important;
 }
 
-/* Quando la schermata di login (#welcome) è aperta: centra la card nello schermo */
-body:has(#welcome:not([style*="display: none"]):not(.hide)) {
-  justify-content: center !important;
-  align-items: center !important;
-  padding: 16px !important;
-}
-
-/* AA. SCHERMATA LOGIN / WELCOME */
-
+/* AA. SCHERMATA LOGIN / WELCOME (Modal Overlay centrato indipendentemente dal body) */
 #welcome {
-  width: 100%;
-  max-width: 560px;
-  max-height: calc(100dvh - 32px);
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 1000 !important;
+  width: calc(100% - 32px) !important;
+  max-width: 560px !important;
+  max-height: calc(100dvh - 32px) !important;
   margin: 0 !important;
-  padding: 22px 26px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  padding: 22px 26px !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25) !important;
+  display: flex; /* FONDAMENTALE: NO !important, permette a jQuery $("#welcome").hide() di funzionare */
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin !important;
 }
 
 #welcome h1 {
@@ -161,11 +174,12 @@ body:has(#tabs ul li.ui-tabs-active a[href="#tab-gamelist-filters"]) #canvas {
   flex: 0 0 calc(100dvh - 340px) !important;
 }
 
-/* In Partita (#main_holder non è vuoto): canvas si adatta ai 220px di bottom */
-body:has(#main_holder:not(:empty)) #canvas {
-  height: calc(100dvh - 220px) !important;
-  max-height: calc(100dvh - 220px) !important;
-  flex: 0 0 calc(100dvh - 220px) !important;
+/* In Partita (staging e attiva): canvas prende tutto lo spazio fino ai 135px della chat */
+body:has(#main_holder:not(:empty)) #canvas,
+body.in-game #canvas {
+  height: calc(100dvh - 135px) !important;
+  max-height: calc(100dvh - 135px) !important;
+  flex: 0 0 calc(100dvh - 135px) !important;
 }
 
 /* Menubar superiore */
@@ -252,10 +266,11 @@ body:has(#main_holder:not(:empty)) #canvas {
   max-height: calc(100% - 48px) !important;
   flex: 1 1 auto !important;
   min-height: 0 !important;
+  width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
-  padding: 12px 16px !important;
+  padding: 10px 14px !important;
   background: #eaedf0 !important;
   box-sizing: border-box !important;
   position: relative !important;
@@ -343,6 +358,7 @@ body:has(#main_holder:not(:empty)) #canvas {
 .game {
   width: 100% !important;
   height: 100% !important;
+  max-height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   min-height: 0 !important;
@@ -432,6 +448,9 @@ body:has(#main_holder:not(:empty)) #canvas {
 .game_body_area {
   flex: 1 1 auto !important;
   min-height: 0 !important;
+  height: calc(100% - 50px) !important;
+  max-height: calc(100% - 50px) !important;
+  width: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
@@ -445,13 +464,15 @@ body:has(#main_holder:not(:empty)) #canvas {
   border-radius: 12px !important;
   border: 1px solid #d0d7de !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
-  padding: 16px 20px !important;
+  padding: 14px 18px !important;
   flex: 1 1 auto !important;
   height: 100% !important;
+  max-height: 100% !important;
   min-height: 0 !important;
-  display: flex;
+  display: flex !important;
   flex-direction: column !important;
-  overflow: hidden !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
   box-sizing: border-box !important;
 }
 
@@ -554,10 +575,12 @@ body:has(#main_holder:not(:empty)) #canvas {
 
 .game_options .card_sets {
   flex: 1 1 auto !important;
+  max-height: clamp(120px, 24vh, 180px) !important;
   min-height: 80px !important;
   overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
   border: 1px solid #e1e4e8 !important;
-  padding: 10px 14px !important;
+  padding: 8px 12px !important;
   border-radius: 8px !important;
   background: #f6f8fa !important;
   margin: 0 !important;
@@ -582,31 +605,41 @@ body:has(#main_holder:not(:empty)) #canvas {
   overflow: hidden !important;
 }
 
-.game_options:not(.hide)~.game_board,
-.game_options:not(.hide)~.game_hand {
+/* Quando le opzioni partita sono visibili (staging prima del via), nascondi tavolo e mano */
+.game_options:not(.hide) ~ .game_board,
+.game_options:not(.hide) ~ .game_hand {
   display: none !important;
 }
 
+/* 1. Colonna Sinistra: Carta Nera e Pulsante Conferma (Desktop) */
 .game_left_side {
   display: flex !important;
   flex-direction: column !important;
-  width: 170px !important;
-  min-width: 170px !important;
-  flex-shrink: 0 !important;
+  justify-content: space-between !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  flex: 0 0 200px !important;
   gap: 8px !important;
   background: #ffffff !important;
-  padding: 10px !important;
+  padding: 12px !important;
   border-radius: 12px !important;
   border: 1px solid #d0d7de !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
   box-sizing: border-box !important;
+  height: 100% !important;
+  min-height: 0 !important;
 }
 
 .game_black_card_wrapper {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 6px !important;
   align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
 .game_black_card_wrapper>span {
@@ -616,19 +649,35 @@ body:has(#main_holder:not(:empty)) #canvas {
   letter-spacing: 0.5px !important;
   color: #57606a !important;
   text-align: center !important;
+  flex: 0 0 auto !important;
 }
 
 .game_black_card {
-  width: 150px !important;
-  height: 210px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  max-width: 175px !important;
+  max-height: 250px !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.game_black_card .card.blackcard {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .confirm_card {
+  flex: 0 0 42px !important;
   width: 100% !important;
-  height: 38px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  margin-top: auto !important;
   border: none !important;
   border-radius: 8px !important;
-  font-size: 13px !important;
+  font-size: 13.5px !important;
   font-weight: 700 !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
@@ -651,6 +700,7 @@ body:has(#main_holder:not(:empty)) #canvas {
   transform: none !important;
 }
 
+/* 2. Colonna Destra: Tavolo Carte Bianche Giocate (Desktop) */
 .game_right_side {
   flex: 1 1 auto !important;
   min-width: 0 !important;
@@ -664,6 +714,7 @@ body:has(#main_holder:not(:empty)) #canvas {
   border: 1px solid #d0d7de !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
   box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .game_white_card_wrapper {
@@ -681,41 +732,43 @@ body:has(#main_holder:not(:empty)) #canvas {
   letter-spacing: 0.5px !important;
   color: #57606a !important;
   margin-bottom: 8px !important;
+  flex: 0 0 auto !important;
 }
 
 .game_white_cards,
 .game_last_round_cards {
   flex: 1 1 auto !important;
-  min-height: 215px !important;
+  min-height: 0 !important;
   background: #f8fafc !important;
   border: 2px dashed #cbd5e1 !important;
   border-radius: 10px !important;
-  padding: 10px !important;
+  padding: 22px 14px 10px 14px !important;
   display: flex !important;
   flex-direction: row !important;
   gap: 12px !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
-  align-items: center !important;
+  align-items: flex-end !important;
   box-sizing: border-box !important;
 }
 
 /* AA. MANO DI CARTE DEL GIOCATORE (.game_hand) */
-
 .game_hand {
-  height: 235px !important;
-  min-height: 235px !important;
-  max-height: 235px !important;
+  flex: 0 0 clamp(165px, 24vh, 205px) !important;
+  height: clamp(165px, 24vh, 205px) !important;
+  min-height: 160px !important;
+  max-height: 215px !important;
   background: #ffffff !important;
   border-radius: 12px !important;
   border: 1px solid #d0d7de !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
-  padding: 8px 14px 10px 14px !important;
+  padding: 4px 12px 6px 12px !important;
   display: flex !important;
   flex-direction: column !important;
   flex-shrink: 0 !important;
   box-sizing: border-box !important;
   position: relative !important;
+  overflow: hidden !important;
 }
 
 .your_hand {
@@ -724,7 +777,8 @@ body:has(#main_holder:not(:empty)) #canvas {
   text-transform: uppercase !important;
   letter-spacing: 0.6px !important;
   color: #1976d2 !important;
-  margin-bottom: 6px !important;
+  margin-bottom: 2px !important;
+  flex: 0 0 auto !important;
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
@@ -732,46 +786,74 @@ body:has(#main_holder:not(:empty)) #canvas {
 
 .game_hand_cards {
   flex: 1 1 auto !important;
+  min-height: 0 !important;
   display: flex !important;
   flex-direction: row !important;
   gap: 10px !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
-  align-items: center !important;
-  padding: 6px 4px 8px 4px !important;
+  align-items: flex-end !important;
+  padding: 18px 8px 6px 8px !important;
+  box-sizing: border-box !important;
   scrollbar-width: thin !important;
 }
 
-.game_hand_cards .card_holder {
-  width: 132px !important;
-  min-width: 132px !important;
-  max-width: 132px !important;
-  height: 184px !important;
-  min-height: 184px !important;
-  max-height: 184px !important;
+.game_hand_cards .card_holder,
+.game_white_cards .card_holder,
+.game_last_round_cards .card_holder {
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  width: auto !important;
+  aspect-ratio: 5 / 7 !important;
+  min-width: 105px !important;
+  max-width: 140px !important;
   transform: none !important;
   margin: 0 !important;
   display: block !important;
   flex-shrink: 0 !important;
+  position: relative !important;
 }
 
 .game_hand_cards .card {
   width: 100% !important;
   height: 100% !important;
+  box-sizing: border-box !important;
   transform: none !important;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
 }
 
 .game_hand_cards .card:hover {
-  transform: translateY(-8px) !important;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18) !important;
+  transform: translateY(-6px) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18) !important;
 }
 
 .game_hand_cards .card.selected,
+.game_white_cards .card.selected,
+.game_last_round_cards .card.selected,
 .card.selected {
   border: 2px solid #1976d2 !important;
-  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.25), 0 8px 18px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3), 0 12px 24px rgba(0, 0, 0, 0.22) !important;
   transform: translateY(-10px) !important;
+  position: relative !important;
+  z-index: 50 !important;
+}
+
+.game_white_cards_binder {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 6px !important;
+  height: 100% !important;
+  align-items: flex-end !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+}
+
+.card_holder:has(.card.selected),
+.game_white_cards_binder:has(.selected),
+.game_white_cards_binder.selected {
+  position: relative !important;
+  z-index: 50 !important;
 }
 
 .game_hand_filter {
@@ -876,10 +958,12 @@ body:has(#main_holder:not(:empty)) #canvas {
 /* AA. BARRA INFERIORE & TABS */
 
 #bottom {
+  margin-top: auto !important;
   height: 240px !important;
   min-height: 240px !important;
   max-height: 240px !important;
   flex: 0 0 240px !important;
+  flex-shrink: 0 !important;
   width: 100% !important;
   background: #ffffff !important;
   border-top: 1px solid #d0d7de !important;
@@ -907,28 +991,82 @@ body:not(:has(#main_holder:not(:empty))) #tabs {
   width: 100% !important;
 }
 
-/* Stato Partita */
-body:has(#main_holder:not(:empty)) #bottom {
-  height: 220px !important;
-  min-height: 220px !important;
-  max-height: 220px !important;
-  flex: 0 0 220px !important;
+/* Stato Partita Desktop: barra chat ridotta e snella (spazio ottimizzato per il tavolo) */
+body:has(#main_holder:not(:empty)) #bottom,
+body.in-game #bottom {
+  height: 135px !important;
+  min-height: 135px !important;
+  max-height: 135px !important;
+  flex: 0 0 135px !important;
 }
 
-body:has(#main_holder:not(:empty)) #info_area {
-  width: 25% !important;
-  min-width: 200px !important;
-  max-width: 320px !important;
+body:has(#main_holder:not(:empty)) #info_area,
+body.in-game #info_area {
+  width: 220px !important;
+  min-width: 180px !important;
+  max-width: 260px !important;
+  flex: 0 0 220px !important;
   border-right: 1px solid #d0d7de !important;
   overflow-y: auto !important;
   background: #fafbfc !important;
-  padding: 8px !important;
+  padding: 6px !important;
   box-sizing: border-box !important;
   display: block !important;
 }
 
-body:has(#main_holder:not(:empty)) #tabs {
-  width: 75% !important;
+body:has(#main_holder:not(:empty)) #tabs,
+body.in-game #tabs {
+  width: calc(100% - 220px) !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 100% !important;
+}
+
+body:has(#main_holder:not(:empty)) #tabs ul,
+body.in-game #tabs ul {
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 2px 8px 0 8px !important;
+}
+
+body:has(#main_holder:not(:empty)) #tabs ul li .tab-button,
+body.in-game #tabs ul li .tab-button {
+  padding: 3px 12px !important;
+  font-size: 11.5px !important;
+}
+
+body:has(#main_holder:not(:empty)) #tab-global:not([aria-hidden="true"]):not(.ui-tabs-hide):not([style*="display: none"]),
+body:has(#main_holder:not(:empty)) #tabs div[id^="tab-chat-"]:not([aria-hidden="true"]):not(.ui-tabs-hide):not([style*="display: none"]),
+body.in-game #tab-global:not([aria-hidden="true"]):not(.ui-tabs-hide):not([style*="display: none"]),
+body.in-game #tabs div[id^="tab-chat-"]:not([aria-hidden="true"]):not(.ui-tabs-hide):not([style*="display: none"]) {
+  height: calc(100% - 28px) !important;
+  padding: 4px 8px 36px 8px !important;
+}
+
+body:has(#main_holder:not(:empty)) .log,
+body.in-game .log {
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+}
+
+body:has(#main_holder:not(:empty)) #tabs .chat,
+body.in-game #tabs .chat {
+  height: 28px !important;
+  bottom: 4px !important;
+  left: 8px !important;
+  right: 76px !important;
+  font-size: 12px !important;
+  padding: 0 8px !important;
+}
+
+body:has(#main_holder:not(:empty)) #tabs .chat_submit,
+body.in-game #tabs .chat_submit {
+  height: 28px !important;
+  bottom: 4px !important;
+  right: 8px !important;
+  width: 62px !important;
+  font-size: 11.5px !important;
+  padding: 0 8px !important;
 }
 
 /* In Partita nascondi le tab e i pannelli "Preferenze" e "Filtri" */
@@ -1374,4 +1512,11 @@ body.in-game #tab-gamelist-filters {
   background: #dafbe1 !important;
   color: #1a7f37 !important;
   border-color: #82e596 !important;
+}
+/* Blocco selettore mobile su desktop */
+@media (min-width: 769px) {
+  #mobile_view_switcher,
+  .mobile_view_switcher {
+    display: none !important;
+  }
 }
